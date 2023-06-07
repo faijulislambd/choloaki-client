@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ThemeToggle = ({ light, dark }) => {
-  const defaultTheme = document
-    .querySelector("html")
-    .getAttribute("data-theme");
-  const [currentTheme, setCurrentTheme] = useState(defaultTheme);
   const [checked, setChecked] = useState(true);
+
+  const [currentTheme, setCurrentTheme] = useState(light);
+
+  console.log(currentTheme);
+
   const handleTheme = () => {
     setChecked(!checked);
+
     if (currentTheme === light) {
       setCurrentTheme(dark);
     }
@@ -21,7 +23,7 @@ const ThemeToggle = ({ light, dark }) => {
   return (
     <input
       type="checkbox"
-      className="toggle toggle-lg"
+      className="toggle toggle-md"
       checked={checked}
       onChange={handleTheme}
     />
