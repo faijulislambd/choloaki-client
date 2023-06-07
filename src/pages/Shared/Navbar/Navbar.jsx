@@ -1,7 +1,33 @@
-import React from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import logo from "./../../../assets/logo/choloaki-logo.svg";
+import logoDark from "./../../../assets/logo/choloaki-logo-dark.svg";
 
 const Navbar = () => {
+  const [selectedLogo, setSelectedLogo] = useState(logo);
+  const [checked, setChecked] = useState(true);
+
+  const light = "cupcake";
+  const dark = "forest";
+
+  const [currentTheme, setCurrentTheme] = useState(light);
+  document.querySelector("html").setAttribute("data-theme", currentTheme);
+
+  const handleTheme = () => {
+    setChecked(!checked);
+
+    if (currentTheme === light) {
+      setCurrentTheme(dark);
+      setSelectedLogo(logoDark);
+    }
+    if (currentTheme === dark) {
+      setCurrentTheme(light);
+      setSelectedLogo(logo);
+    }
+  };
+
+  document.querySelector("html").setAttribute("data-theme", currentTheme);
+
   const navLinks = (
     <>
       <li>
@@ -21,7 +47,7 @@ const Navbar = () => {
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
-        <div className="w-full navbar bg-base-300">
+        <div className="w-full navbar bg-base-200">
           <div className="flex-none lg:hidden">
             <label htmlFor="my-drawer-3" className="btn btn-square btn-ghost">
               <svg
@@ -39,9 +65,19 @@ const Navbar = () => {
               </svg>
             </label>
           </div>
-          <div className="flex-1 px-2 mx-2">Navbar Title</div>
+          <div className="flex-1 px-2 mx-2">
+            <img src={selectedLogo} className="w-24" />
+          </div>
           <div className="flex-none hidden lg:block">
-            <ul className="menu menu-horizontal">{navLinks}</ul>
+            <ul className="menu menu-horizontal space-x-2">{navLinks}</ul>
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              className="toggle toggle-md"
+              checked={checked}
+              onChange={handleTheme}
+            />
           </div>
         </div>
         {/* Page content here */}

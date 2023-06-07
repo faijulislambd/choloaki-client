@@ -12,12 +12,14 @@ export default {
         cupcake: {
           ...require("daisyui/src/theming/themes")["[data-theme=cupcake]"],
           primary: "#ee2a53",
+          DEFAULT: "#ee2a53",
           "primary-focus": "#d11d44",
           "primary-content": "#ffffff",
         },
         forest: {
           ...require("daisyui/src/theming/themes")["[data-theme=forest]"],
           primary: "#ee2a53",
+          DEFAULT: "#ee2a53",
           "primary-focus": "#d11d44",
           "primary-content": "#ffffff",
         },
