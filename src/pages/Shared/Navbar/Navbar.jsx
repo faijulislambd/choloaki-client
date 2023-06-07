@@ -1,9 +1,20 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
-  const navLinks = `
-
-  `;
+  const navLinks = (
+    <>
+      <li>
+        <NavLink to="/">Home</NavLink>
+      </li>
+      <li>
+        <NavLink to="/instructors">Instructors</NavLink>
+      </li>
+      <li>
+        <NavLink to="/courses">Courses</NavLink>
+      </li>
+    </>
+  );
 
   return (
     <div className="drawer">
@@ -30,15 +41,7 @@ const Navbar = () => {
           </div>
           <div className="flex-1 px-2 mx-2">Navbar Title</div>
           <div className="flex-none hidden lg:block">
-            <ul className="menu menu-horizontal">
-              {/* Navbar menu content here */}
-              <li>
-                <a>Navbar Item 1</a>
-              </li>
-              <li>
-                <a>Navbar Item 2</a>
-              </li>
-            </ul>
+            <ul className="menu menu-horizontal">{navLinks}</ul>
           </div>
         </div>
         {/* Page content here */}
@@ -46,15 +49,7 @@ const Navbar = () => {
       </div>
       <div className="drawer-side">
         <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
-        <ul className="menu p-4 w-80 h-full bg-base-200">
-          {/* Sidebar content here */}
-          <li>
-            <a>Sidebar Item 1</a>
-          </li>
-          <li>
-            <a>Sidebar Item 2</a>
-          </li>
-        </ul>
+        <ul className="menu p-4 w-80 h-full bg-base-200">{navLinks}</ul>
       </div>
     </div>
   );
