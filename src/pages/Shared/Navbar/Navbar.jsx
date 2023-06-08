@@ -37,7 +37,7 @@ const Navbar = () => {
         <NavLink to="/instructors">Instructors</NavLink>
       </li>
       <li>
-        <NavLink to="/courses">Courses</NavLink>
+        <NavLink to="/classes">Classes</NavLink>
       </li>
     </>
   );
@@ -69,21 +69,27 @@ const Navbar = () => {
             <img src={selectedLogo} className="w-24" />
           </div>
           <div className="flex-none hidden lg:block">
-            <ul className="menu menu-horizontal space-x-2">{navLinks}</ul>
+            <ul className="menu menu-horizontal space-x-2 py-0">{navLinks}</ul>
           </div>
-          <div>
-            <input
-              type="checkbox"
-              className="toggle toggle-md"
-              checked={checked}
-              onChange={handleTheme}
-            />
+          <div className="flex-none lg:block">
+            <ul className="menu menu-horizontal space-x-2 items-center lg:border-l-2 ps-5 lg:border-slate-300 py-0">
+              <li>
+                <NavLink to="/login">Login</NavLink>
+              </li>
+              <li>
+                <input
+                  type="checkbox"
+                  className="toggle toggle-md"
+                  checked={checked}
+                  onChange={handleTheme}
+                />
+              </li>
+            </ul>
           </div>
         </div>
         {/* Page content here */}
-        Content
       </div>
-      <div className="drawer-side">
+      <div className="drawer-side z-[1000]">
         <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
         <ul className="menu p-4 w-80 h-full bg-base-200">{navLinks}</ul>
       </div>

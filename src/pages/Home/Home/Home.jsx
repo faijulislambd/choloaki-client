@@ -1,10 +1,15 @@
 import PageTitle from "../../../components/PageTitle";
+import Banner from "../Banner/Banner";
+import Instructors from "../Instructors/Instructors";
 
 const Home = () => {
   return (
     <>
       <PageTitle title="Home"></PageTitle>
-      <h1>This is home</h1>
+      <div>
+        <Banner></Banner>
+        <Instructors></Instructors>
+      </div>
     </>
   );
 };

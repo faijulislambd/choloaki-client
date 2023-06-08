@@ -8,3 +8,14 @@
     --n: 347 85% 55%;
   }
 }
+
+.menu
+  :where(
+    li:not(.menu-title):not(.disabled) > *:not(ul):not(details):not(.menu-title)
+  ):focus {
+  background-color: hsl(var(--n) / 0.8);
+}
+
+* {
+  font-family: "Inter", sans-serif;
+}
