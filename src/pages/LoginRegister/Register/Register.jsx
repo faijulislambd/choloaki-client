@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 const Register = () => {
   const [passwordState, setPasswordState] = useState(true);
   const [confirmPasswordState, setConfirmPasswordState] = useState(true);
-  const { signInWithGithub, signInWithGoogle, imageToken } =
+  const { signInWithGithub, signInWithGoogle, createUser, setUserNameImage } =
     useContext(UserContext);
   const {
     register,
@@ -19,7 +19,7 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const [imageUpload] = useUploadImg();
+  const [imageUpload, imageURL] = useUploadImg();
   const navigate = useNavigate();
   const location = useLocation();
   let from = location?.state?.from?.pathname || "/";
@@ -29,7 +29,7 @@ const Register = () => {
     const email = data.email;
     const password = data.password;
     const confirm_password = data.confirm_password;
-    const image = imageUpload(data.image[0]);
+    imageUpload(data.image[0]);
     // Start and end metacharacters
     const emptyFieldRegEx = /^\s*$/g;
 
@@ -53,17 +53,8 @@ const Register = () => {
       });
       return;
     }
+    console.log(imageUpload(data.image[0]));
 
-    if (emptyFieldRegEx.test(imageURL)) {
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: "Image URL Felid Cannot Be Empty",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      return;
-    }
     if (password.length < 6) {
       Swal.fire({
         position: "top-end",
@@ -74,31 +65,33 @@ const Register = () => {
       });
       return;
     }
-    createUser(email, password)
-      .then((result) => {
-        setUserNameImage(name, image)
-          .then(console.log("Display Name & Image Set"))
-          .catch((error) => console.error(error));
+    console.log(imageURL);
+    if (imageURL !== undefined) {
+      createUser(email, password)
+        .then((result) => {
+          setUserNameImage(name, imageURL)
+            .then(console.log("Display Name & Image Set"))
+            .catch((error) => console.error(error));
 
-        form.reset();
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Registration Updated!",
-          showConfirmButton: false,
-          timer: 1500,
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Registration Updated!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate("/");
+        })
+        .catch((error) => {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: error.message,
+            showConfirmButton: false,
+            timer: 1500,
+          });
         });
-        navigate("/");
-      })
-      .catch((error) => {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: error.message,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      });
+    }
   };
 
   const handleGoogleLogin = () => {

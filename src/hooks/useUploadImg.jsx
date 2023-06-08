@@ -1,6 +1,10 @@
+import { useState } from "react";
+
 const imageToken = import.meta.env.VITE_IMAGEAPI;
 
 const useUploadImg = () => {
+  const [imageURL, setImageURL] = useState(null);
+
   const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${imageToken}`;
 
   const imageUpload = (img) => {
@@ -13,13 +17,12 @@ const useUploadImg = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          const imgURL = data.data.display_url;
-          return imgURL;
+          setImageURL(data.data.display_url);
         }
       });
   };
 
-  return [imageUpload];
+  return [imageUpload, imageURL];
 };
 
 export default useUploadImg;

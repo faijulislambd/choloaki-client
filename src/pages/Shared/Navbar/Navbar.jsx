@@ -2,8 +2,13 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "./../../../assets/logo/choloaki-logo.svg";
 import logoDark from "./../../../assets/logo/choloaki-logo-dark.svg";
+import { useContext } from "react";
+import { UserContext } from "../../../providers/AuthProviders";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
+  const { user, logout } = useContext(UserContext);
+
   const [selectedLogo, setSelectedLogo] = useState(logo);
   const [checked, setChecked] = useState(true);
 
@@ -24,6 +29,19 @@ const Navbar = () => {
       setCurrentTheme(light);
       setSelectedLogo(logo);
     }
+  };
+
+  const handleLogOut = () => {
+    logout()
+      .then(() => {})
+      .catch((err) => console.log(err));
+    Swal.fire({
+      position: "bottom-end",
+      icon: "success",
+      title: "Come Back Soon!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   document.querySelector("html").setAttribute("data-theme", currentTheme);
@@ -73,12 +91,20 @@ const Navbar = () => {
           </div>
           <div className="flex-none lg:block">
             <ul className="menu menu-horizontal space-x-2 items-center lg:border-l-2 ps-5 lg:border-slate-300 py-0">
-              <li>
-                <NavLink to="/login">Login</NavLink>
-              </li>
-              <li>
-                <NavLink to="/register">Register</NavLink>
-              </li>
+              {!user ? (
+                <>
+                  <li>
+                    <NavLink to="/login">Login</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/register">Register</NavLink>
+                  </li>
+                </>
+              ) : (
+                <li>
+                  <a onClick={handleLogOut}>Log Out</a>
+                </li>
+              )}
               <li>
                 <input
                   type="checkbox"
