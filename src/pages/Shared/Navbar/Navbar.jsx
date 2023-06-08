@@ -77,6 +77,9 @@ const Navbar = () => {
                 <NavLink to="/login">Login</NavLink>
               </li>
               <li>
+                <NavLink to="/register">Register</NavLink>
+              </li>
+              <li>
                 <input
                   type="checkbox"
                   className="toggle toggle-md"

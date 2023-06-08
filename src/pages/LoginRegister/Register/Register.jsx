@@ -1,21 +1,142 @@
+import { FaEye, FaEyeSlash, FaGithub, FaGoogle } from "react-icons/fa";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import PageTitle from "../../../components/PageTitle";
+import { useState } from "react";
+import { useContext } from "react";
+import { UserContext } from "../../../providers/AuthProviders";
+import { useForm } from "react-hook-form";
+import useUploadImg from "../../../hooks/useUploadImg";
+import Swal from "sweetalert2";
+
 const Register = () => {
+  const [passwordState, setPasswordState] = useState(true);
+  const [confirmPasswordState, setConfirmPasswordState] = useState(true);
+  const { signInWithGithub, signInWithGoogle, imageToken } =
+    useContext(UserContext);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const [imageUpload] = useUploadImg();
+  const navigate = useNavigate();
+  const location = useLocation();
+  let from = location?.state?.from?.pathname || "/";
+
+  const onRegister = (data) => {
+    const name = data.name;
+    const email = data.email;
+    const password = data.password;
+    const confirm_password = data.confirm_password;
+    const image = imageUpload(data.image[0]);
+    // Start and end metacharacters
+    const emptyFieldRegEx = /^\s*$/g;
+
+    if (emptyFieldRegEx.test(name)) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Name Felid Cannot Be Empty",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
+    if (emptyFieldRegEx.test(email)) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Email Felid Cannot Be Empty",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
+
+    if (emptyFieldRegEx.test(imageURL)) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Image URL Felid Cannot Be Empty",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
+    if (password.length < 6) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Password Must Be Minimum 6 Characters Long",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
+    createUser(email, password)
+      .then((result) => {
+        setUserNameImage(name, image)
+          .then(console.log("Display Name & Image Set"))
+          .catch((error) => console.error(error));
+
+        form.reset();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Registration Updated!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: error.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    signInWithGoogle(navigate, from);
+  };
+  const handleGitHubLogin = () => {
+    signInWithGithub(navigate, from);
+  };
+
   return (
     <>
-      <PageTitle title="Login"></PageTitle>
+      <PageTitle title="Register"></PageTitle>
 
       <div className="hero min-h-screen bg-base-200">
-        <div className="hero-content flex-col">
-          <div className="card w-full max-w-sm shadow-2xl bg-base-100 lg:scale-110">
+        <div className="hero-content lg:w-1/3 flex-col">
+          <div className="card w-full shadow-2xl bg-base-100 lg:scale-110">
             <div className="card-body items-center">
               <h1 className="card-title font-bold">Register now!</h1>
-              <form onSubmit={handleSubmit(onRegister)}>
+              <form onSubmit={handleSubmit(onRegister)} className="w-full">
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Name</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    className="input input-bordered"
+                    {...register("name")}
+                  />
+                </div>
+
                 <div className="form-control">
                   <label className="label">
                     <span className="label-text">Email</span>
                   </label>
                   <input
                     type="text"
-                    placeholder="email"
+                    placeholder="Email"
                     className="input input-bordered"
                     {...register("email")}
                   />
@@ -24,11 +145,59 @@ const Register = () => {
                   <label className="label">
                     <span className="label-text">Password</span>
                   </label>
+                  <div className="relative">
+                    <input
+                      type={passwordState ? "password" : "text"}
+                      placeholder="Password"
+                      className="input input-bordered w-full"
+                      {...register("password")}
+                    />
+                    <div
+                      className="absolute inset-y-4 right-4 cursor-pointer"
+                      onClick={() => setPasswordState(!passwordState)}
+                    >
+                      {passwordState ? (
+                        <FaEyeSlash></FaEyeSlash>
+                      ) : (
+                        <FaEye></FaEye>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Confirm Password</span>
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={confirmPasswordState ? "password" : "text"}
+                      placeholder="Rewrite Password"
+                      className="input input-bordered w-full"
+                      {...register("confirm_password")}
+                    />
+                    <div
+                      className="absolute inset-y-4 right-4 cursor-pointer"
+                      onClick={() =>
+                        setConfirmPasswordState(!confirmPasswordState)
+                      }
+                    >
+                      {confirmPasswordState ? (
+                        <FaEyeSlash></FaEyeSlash>
+                      ) : (
+                        <FaEye></FaEye>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Upload Profile Image</span>
+                  </label>
                   <input
-                    type="text"
-                    placeholder="password"
-                    className="input input-bordered"
-                    {...register("password")}
+                    type="file"
+                    className="file-input file-input-bordered w-full max-w-xs"
+                    accept="image/png, image/gif, image/jpeg"
+                    {...register("image")}
                   />
                 </div>
                 <div className="form-control mt-6">
