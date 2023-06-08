@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { UserContext } from "../providers/AuthProvider";
+import { UserContext } from "../providers/AuthProviders";
 import { useQuery } from "@tanstack/react-query";
 
 const useClasses = () => {

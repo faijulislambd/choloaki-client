@@ -1,7 +1,6 @@
-import React from "react";
 import {
-  GithubAuthProvider,
   GoogleAuthProvider,
+  GithubAuthProvider,
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
@@ -21,7 +20,7 @@ export const UserContext = createContext(null);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
-const AuthProvider = ({ children }) => {
+const AuthProviders = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -36,7 +35,7 @@ const AuthProvider = ({ children }) => {
     });
   };
 
-  const signInUser = (email, password) => {
+  const signIn = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
@@ -44,7 +43,7 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
-  const signUpWithGoogle = (navigate, from) => {
+  const signInWithGoogle = (navigate, from) => {
     return signInWithPopup(auth, googleProvider)
       .then((result) => {
         const loggedInUser = result.user;
@@ -52,7 +51,7 @@ const AuthProvider = ({ children }) => {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Login Successful!",
+          title: "Google Login Successful!",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -68,7 +67,7 @@ const AuthProvider = ({ children }) => {
         });
       });
   };
-  const signUpWithGithub = (navigate, from) => {
+  const signInWithGithub = (navigate, from) => {
     return signInWithPopup(auth, githubProvider)
       .then((result) => {
         const loggedInUser = result.user;
@@ -76,7 +75,7 @@ const AuthProvider = ({ children }) => {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Login Successful!",
+          title: "Github Login Successful!",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -107,12 +106,12 @@ const AuthProvider = ({ children }) => {
   const authInfo = {
     user,
     createUser,
-    signInUser,
+    signIn,
     logout,
     loading,
     setUserNameImage,
-    signUpWithGoogle,
-    signUpWithGithub,
+    signInWithGoogle,
+    signInWithGithub,
   };
 
   return (
@@ -120,4 +119,4 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-export default AuthProvider;
+export default AuthProviders;
