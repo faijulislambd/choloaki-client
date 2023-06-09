@@ -68,15 +68,12 @@ const Register = () => {
       });
       return;
     }
-    console.log(imageURL);
 
     if (!loading) {
-      console.log(imageURL);
       createUser(email, password)
         .then((result) => {
           setUserNameImage(name, imageURL)
             .then(async (img = imageURL) => {
-              console.log(img);
               const response = await axiosIntercept.post(`users`, {
                 name: name,
                 email: email,

@@ -1,16 +1,12 @@
 const UserCard = ({ user }) => {
   return (
     <div>
-      <div className="card w-96 bg-base-100 shadow-xl">
+      <div className="card w-96 bg-base-100 dark:bg-primary shadow-xl">
         <figure>
-          <img src={user} alt="Shoes" />
+          <img src={user.image} alt="Shoes" />
         </figure>
         <div className="card-body">
-          <h2 className="card-title">Shoes!</h2>
-          <p>If a dog chews shoes whose shoes does he choose?</p>
-          <div className="card-actions justify-end">
-            <button className="btn btn-primary">Buy Now</button>
-          </div>
+          <h2 className="card-title">{user.name}</h2>
         </div>
       </div>
     </div>
