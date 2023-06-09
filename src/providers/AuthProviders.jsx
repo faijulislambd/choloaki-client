@@ -52,6 +52,7 @@ const AuthProviders = ({ children }) => {
         const response = await hook.post(`users`, {
           name: loggedInUser.displayName,
           email: loggedInUser.email,
+          image: loggedInUser.photoURL,
           role: "student",
         });
         setUser(loggedInUser);

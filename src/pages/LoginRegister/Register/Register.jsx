@@ -19,7 +19,7 @@ const Register = () => {
     formState: { errors },
   } = useForm();
   const [axiosIntercept] = useAxiosIntercept();
-  const [imageUpload, imageURL] = useUploadImg();
+  const [imageUpload, imageURL, loading] = useUploadImg();
   const navigate = useNavigate();
   const location = useLocation();
   let from = location?.state?.from?.pathname || "/";
@@ -33,7 +33,7 @@ const Register = () => {
     const email = data.email;
     const password = data.password;
     const confirm_password = data.confirm_password;
-
+    // imageUpload(data.image[0])
     // Start and end metacharacters
     const emptyFieldRegEx = /^\s*$/g;
 
@@ -68,8 +68,10 @@ const Register = () => {
       });
       return;
     }
+    console.log(imageURL);
 
-    if (imageURL !== null) {
+    if (!loading) {
+      console.log(imageURL);
       createUser(email, password)
         .then((result) => {
           setUserNameImage(name, imageURL)
@@ -78,6 +80,7 @@ const Register = () => {
               const response = await axiosIntercept.post(`users`, {
                 name: name,
                 email: email,
+                image: imageURL,
                 role: "student",
               });
             })
