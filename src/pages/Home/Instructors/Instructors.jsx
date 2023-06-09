@@ -13,7 +13,7 @@ const Instructors = () => {
 
   return (
     <section className="mb-10">
-      <HeadTitle first="Our" last="Teacher"></HeadTitle>
+      <HeadTitle first="Our" last="Instructors"></HeadTitle>
       <Swiper
         slidesPerView={3}
         spaceBetween={10}

@@ -101,9 +101,29 @@ const Navbar = () => {
                   </li>
                 </>
               ) : (
-                <li>
-                  <a onClick={handleLogOut}>Log Out</a>
-                </li>
+                <div className="dropdown dropdown-end">
+                  <label
+                    tabIndex={0}
+                    className="btn btn-ghost btn-circle avatar"
+                  >
+                    <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-4">
+                      <img src={user.photoURL} />
+                    </div>
+                  </label>
+                  <ul
+                    tabIndex={0}
+                    className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-200 rounded-box w-40"
+                  >
+                    <li className="ps-3 text-primary">{user.displayName}</li>
+                    <li>
+                      <a className="justify-between">Dashboard</a>
+                    </li>
+
+                    <li>
+                      <a onClick={handleLogOut}>Logout</a>
+                    </li>
+                  </ul>
+                </div>
               )}
               <li>
                 <input
