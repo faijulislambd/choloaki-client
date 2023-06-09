@@ -14,6 +14,7 @@ import app from "../firebase/firebase.config";
 import { useState } from "react";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
+import useAxiosIntercept from "../hooks/useAxiosIntercept";
 
 export const UserContext = createContext(null);
 
@@ -43,10 +44,16 @@ const AuthProviders = ({ children }) => {
     return signOut(auth);
   };
 
-  const signInWithGoogle = (navigate, from) => {
+  const signInWithGoogle = (navigate, from, hook) => {
     return signInWithPopup(auth, googleProvider)
-      .then((result) => {
+      .then(async (result) => {
         const loggedInUser = result.user;
+
+        const response = await hook.post(`users`, {
+          name: loggedInUser.displayName,
+          email: loggedInUser.email,
+          role: "student",
+        });
         setUser(loggedInUser);
         Swal.fire({
           position: "top-end",
@@ -67,10 +74,17 @@ const AuthProviders = ({ children }) => {
         });
       });
   };
-  const signInWithGithub = (navigate, from) => {
+  const signInWithGithub = (navigate, from, hook) => {
     return signInWithPopup(auth, githubProvider)
-      .then((result) => {
+      .then(async (result) => {
         const loggedInUser = result.user;
+
+        const response = await hook.post(`users`, {
+          name: loggedInUser.displayName,
+          email: loggedInUser.email,
+          role: "student",
+        });
+
         setUser(loggedInUser);
         Swal.fire({
           position: "top-end",

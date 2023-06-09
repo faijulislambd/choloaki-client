@@ -3,7 +3,6 @@ import UserCard from "../../Shared/UserCard/UserCard";
 
 const Instructors = () => {
   const [instructors] = useInstructors();
-  console.log(instructors);
   return (
     <div>
       {instructors.map((instructor) => (

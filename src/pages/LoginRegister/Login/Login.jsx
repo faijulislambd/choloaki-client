@@ -1,16 +1,15 @@
-import { useContext } from "react";
 import PageTitle from "../../../components/PageTitle";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import { UserContext } from "../../../providers/AuthProviders";
-import { FaGithub, FaGoogle, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import useAuth from "../../../hooks/useAuth";
+import SocialLogin from "../../../components/SocialLogin";
 const Login = () => {
   const [passwordState, setPasswordState] = useState(true);
-  const { signIn, signInWithGithub, signInWithGoogle } =
-    useContext(UserContext);
+  const { signIn } = useAuth();
   const {
     register,
     handleSubmit,
@@ -34,13 +33,6 @@ const Login = () => {
       });
       navigate(from, { replace: true });
     });
-  };
-
-  const handleGoogleLogin = () => {
-    signInWithGoogle(navigate, from);
-  };
-  const handleGitHubLogin = () => {
-    signInWithGithub(navigate, from);
   };
 
   return (
@@ -96,20 +88,7 @@ const Login = () => {
                 </div>
               </form>
               <div className="divider">Or Sign In With</div>
-              <div className="flex justify-center items-center space-x-2">
-                <button
-                  className="btn btn-circle hover:btn-primary"
-                  onClick={handleGoogleLogin}
-                >
-                  <FaGoogle></FaGoogle>
-                </button>
-                <button
-                  className="btn btn-circle hover:btn-primary"
-                  onClick={handleGitHubLogin}
-                >
-                  <FaGithub></FaGithub>
-                </button>
-              </div>
+              <SocialLogin navigate={navigate} from={from}></SocialLogin>
               <div className="w-full block text-left text-xs mt-3">
                 No Account?{" "}
                 <Link className="btn-link" to="/register">

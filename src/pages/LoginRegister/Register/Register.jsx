@@ -1,35 +1,39 @@
-import { FaEye, FaEyeSlash, FaGithub, FaGoogle } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import PageTitle from "../../../components/PageTitle";
 import { useState } from "react";
-import { useContext } from "react";
-import { UserContext } from "../../../providers/AuthProviders";
 import { useForm } from "react-hook-form";
 import useUploadImg from "../../../hooks/useUploadImg";
 import Swal from "sweetalert2";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosIntercept from "../../../hooks/useAxiosIntercept";
+import SocialLogin from "../../../components/SocialLogin";
 
 const Register = () => {
   const [passwordState, setPasswordState] = useState(true);
   const [confirmPasswordState, setConfirmPasswordState] = useState(true);
-  const { signInWithGithub, signInWithGoogle, createUser, setUserNameImage } =
-    useContext(UserContext);
+  const { createUser, setUserNameImage } = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  const [axiosIntercept] = useAxiosIntercept();
   const [imageUpload, imageURL] = useUploadImg();
   const navigate = useNavigate();
   const location = useLocation();
   let from = location?.state?.from?.pathname || "/";
 
-  const onRegister = (data) => {
+  const handleImageUploadOnChange = (file) => {
+    imageUpload(file);
+  };
+
+  const onRegister = async (data) => {
     const name = data.name;
     const email = data.email;
     const password = data.password;
     const confirm_password = data.confirm_password;
-    imageUpload(data.image[0]);
+
     // Start and end metacharacters
     const emptyFieldRegEx = /^\s*$/g;
 
@@ -53,7 +57,6 @@ const Register = () => {
       });
       return;
     }
-    console.log(imageUpload(data.image[0]));
 
     if (password.length < 6) {
       Swal.fire({
@@ -65,12 +68,19 @@ const Register = () => {
       });
       return;
     }
-    console.log(imageURL);
-    if (imageURL !== undefined) {
+
+    if (imageURL !== null) {
       createUser(email, password)
         .then((result) => {
           setUserNameImage(name, imageURL)
-            .then(console.log("Display Name & Image Set"))
+            .then(async (img = imageURL) => {
+              console.log(img);
+              const response = await axiosIntercept.post(`users`, {
+                name: name,
+                email: email,
+                role: "student",
+              });
+            })
             .catch((error) => console.error(error));
 
           Swal.fire({
@@ -92,13 +102,6 @@ const Register = () => {
           });
         });
     }
-  };
-
-  const handleGoogleLogin = () => {
-    signInWithGoogle(navigate, from);
-  };
-  const handleGitHubLogin = () => {
-    signInWithGithub(navigate, from);
   };
 
   return (
@@ -191,6 +194,9 @@ const Register = () => {
                     className="file-input file-input-bordered w-full max-w-xs"
                     accept="image/png, image/gif, image/jpeg"
                     {...register("image")}
+                    onChange={(e) =>
+                      handleImageUploadOnChange(e.target.files[0])
+                    }
                   />
                 </div>
                 <div className="form-control mt-6">
@@ -202,20 +208,8 @@ const Register = () => {
                 </div>
               </form>
               <div className="divider">Or Sign In With</div>
-              <div className="flex justify-center items-center space-x-2">
-                <button
-                  className="btn btn-circle hover:btn-primary"
-                  onClick={handleGoogleLogin}
-                >
-                  <FaGoogle></FaGoogle>
-                </button>
-                <button
-                  className="btn btn-circle hover:btn-primary"
-                  onClick={handleGitHubLogin}
-                >
-                  <FaGithub></FaGithub>
-                </button>
-              </div>
+              <SocialLogin navigate={navigate} from={from}></SocialLogin>
+
               <div className="w-full block text-left text-xs mt-3">
                 Already Have An Account?{" "}
                 <Link className="btn-link" to="/login">
