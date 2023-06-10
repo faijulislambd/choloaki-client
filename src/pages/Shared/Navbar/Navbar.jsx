@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import logo from "./../../../assets/logo/choloaki-logo.svg";
 import logoDark from "./../../../assets/logo/choloaki-logo-dark.svg";
 import { useContext } from "react";
@@ -17,6 +17,7 @@ const Navbar = () => {
   const dark = "forest";
 
   const [cart] = useInsertCart();
+  const totalCartCost = cart.reduce((sum, item) => item.price + sum, 0);
 
   const [currentTheme, setCurrentTheme] = useState(light);
   document.querySelector("html").setAttribute("data-theme", currentTheme);
@@ -158,11 +159,16 @@ const Navbar = () => {
                         <span className="font-bold text-lg">
                           {cart ? cart.length : 0} Items
                         </span>
-                        <span className="text-info">Subtotal: $999</span>
+                        <span className="text-info">
+                          Subtotal: ${totalCartCost ? totalCartCost : 0}
+                        </span>
                         <div className="card-actions">
-                          <button className="btn btn-primary btn-block">
+                          <Link
+                            className="btn btn-primary btn-block"
+                            disable={cart ? false : true}
+                          >
                             View cart
-                          </button>
+                          </Link>
                         </div>
                       </div>
                     </div>
