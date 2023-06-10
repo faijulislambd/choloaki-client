@@ -1,22 +1,22 @@
 import { useContext } from "react";
 import { UserContext } from "../providers/AuthProviders";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
 
-const useClasses = () => {
+const useInsertCart = () => {
   const { user } = useContext(UserContext);
-  const { refetch, data: availableClasses = [] } = useQuery({
-    queryKey: ["availableClasses", user?.email],
+  const { refetch, data: cart = [] } = useQuery({
+    queryKey: ["cart", user?.email],
     queryFn: async () => {
-      const response = await fetch("http://localhost:5000/classes");
+      const response = await fetch(
+        `http://localhost:5000/cart?email=${user?.email}`
+      );
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
       return response.json();
     },
   });
-  console.log(availableClasses);
-  return [availableClasses, refetch];
+  return [cart, refetch];
 };
 
-export default useClasses;
+export default useInsertCart;
