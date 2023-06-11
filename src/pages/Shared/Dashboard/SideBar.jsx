@@ -2,6 +2,7 @@ import {
   FaCartArrowDown,
   FaDashcube,
   FaHome,
+  FaPenSquare,
   FaUser,
   FaUserFriends,
   FaUserGraduate,
@@ -26,7 +27,7 @@ const SideBar = ({ children }) => {
         <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content space-y-3">
           {/* Sidebar content here */}
           <li>
-            <NavLink to="/dashboard">
+            <NavLink to="/dashboard/my-dashboard">
               <FaUser></FaUser> Dashboard
             </NavLink>
           </li>
@@ -43,6 +44,11 @@ const SideBar = ({ children }) => {
           <li>
             <NavLink to="/dashboard/my-classes">
               <FaDashcube></FaDashcube> My Classes
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/new-class">
+              <FaPenSquare></FaPenSquare> Create Class
             </NavLink>
           </li>
           <li>
