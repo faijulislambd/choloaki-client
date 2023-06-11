@@ -121,7 +121,9 @@ const Navbar = () => {
                     >
                       <li className="ps-3 text-primary">{user.displayName}</li>
                       <li>
-                        <a className="justify-between">Dashboard</a>
+                        <Link to="/dashboard" className="justify-between">
+                          Dashboard
+                        </Link>
                       </li>
 
                       <li>
@@ -165,7 +167,8 @@ const Navbar = () => {
                         <div className="card-actions">
                           <Link
                             className="btn btn-primary btn-block"
-                            disable={cart ? false : true}
+                            disable={cart ? "false" : "true"}
+                            to="/dashboard/cart"
                           >
                             View cart
                           </Link>

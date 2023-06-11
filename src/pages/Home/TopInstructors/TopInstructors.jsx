@@ -6,9 +6,9 @@ import HeadTitle from "../../../components/HeadTitle";
 
 // Import Swiper styles
 import "swiper/css";
-import "swiper/css/pagination";
+import "swiper/css/navigation";
 import { Navigation, Autoplay } from "swiper";
-const Instructors = () => {
+const TopInstructors = () => {
   const [instructors] = useInstructors();
 
   return (
@@ -17,6 +17,7 @@ const Instructors = () => {
       <Swiper
         slidesPerView={3}
         spaceBetween={10}
+        centeredSlides={true}
         modules={[Navigation, Autoplay]}
         navigation={true}
         className="mySwiper"
@@ -36,4 +37,4 @@ const Instructors = () => {
   );
 };
 
-export default Instructors;
+export default TopInstructors;

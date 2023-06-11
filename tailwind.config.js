@@ -24,6 +24,9 @@ export default {
           "primary-focus": "#d11d44",
           "primary-content": "#ffffff",
         },
+        lemonade: {
+          "primary-content": "#ffffff",
+        },
       },
     ], // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
     darkTheme: "forest", // name of one of the included themes for dark mode

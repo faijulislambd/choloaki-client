@@ -1,16 +1,10 @@
-import { useEffect } from "react";
 import HeadTitle from "../../../components/HeadTitle";
 import PageTitle from "../../../components/PageTitle";
 import ClassesCard from "../../Shared/ClassesCard/ClassesCard";
-import { useState } from "react";
+import useClasses from "../../../hooks/useClasses";
 
 const Courses = () => {
-  const [availableClasses, setAvailableClasses] = useState([]);
-  useEffect(() => {
-    fetch(`http://localhost:5000/classes/approved`)
-      .then((res) => res.json())
-      .then((data) => setAvailableClasses(data));
-  }, []);
+  const [availableClasses] = useClasses();
 
   return (
     <>

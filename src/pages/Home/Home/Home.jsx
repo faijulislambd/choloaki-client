@@ -1,6 +1,7 @@
 import PageTitle from "../../../components/PageTitle";
 import Banner from "../Banner/Banner";
-import Instructors from "../Instructors/Instructors";
+import TopClasses from "../TopClasses/TopClasses";
+import TopInstructors from "../TopInstructors/TopInstructors";
 
 const Home = () => {
   return (
@@ -8,7 +9,8 @@ const Home = () => {
       <PageTitle title="Home"></PageTitle>
       <div>
         <Banner></Banner>
-        <Instructors></Instructors>
+        <TopClasses></TopClasses>
+        <TopInstructors></TopInstructors>
       </div>
     </>
   );

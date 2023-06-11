@@ -4,6 +4,7 @@ import useInsertCart from "../../../hooks/useInsertCart";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosIntercept from "../../../hooks/useAxiosIntercept";
+import { useState } from "react";
 
 const ClassesCard = ({ cls }) => {
   const { user } = useContext(UserContext);
@@ -11,6 +12,7 @@ const ClassesCard = ({ cls }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [axiosIntercept] = useAxiosIntercept();
+  const [seatsCount, setSeatsCount] = useState(cls.seats);
 
   const hangleAddToCart = async (item) => {
     const { name, image, price, _id } = item;
@@ -24,6 +26,16 @@ const ClassesCard = ({ cls }) => {
       };
       const response = await axiosIntercept.post("cart", cartItem);
       if (response.status === 200) {
+        const updatedSeat = { seats: seatsCount - 1 };
+        setSeatsCount(seatsCount - 1);
+        const updateSeatCount = await axiosIntercept.patch(
+          `classes/seat/${_id}`,
+          updatedSeat
+        );
+        if (updateSeatCount.status === 200) {
+          console.log("Seats Updated");
+        }
+
         refetch();
         Swal.fire({
           position: "top-end",
@@ -53,7 +65,7 @@ const ClassesCard = ({ cls }) => {
   return (
     <div
       className={`card w-96 shadow-xl ${
-        cls.seats === 0 ? "bg-red-400" : "bg-base-200"
+        seatsCount === 0 ? "bg-red-500" : "bg-base-200"
       }`}
     >
       <figure className="relative">
@@ -68,12 +80,12 @@ const ClassesCard = ({ cls }) => {
           <strong>Instructor:</strong> {cls.class_instructor}
         </div>
         <div>
-          <strong>Available Seats:</strong> {cls.seats}
+          <strong>Available Seats:</strong> {seatsCount}
         </div>
         <div className="card-actions items-center mt-4">
           <button
             className="btn btn-primary"
-            disabled={cls.seats <= 0 ? true : false}
+            disabled={seatsCount <= 0 ? true : false}
             onClick={() => hangleAddToCart(cls)}
           >
             Add To Cart
