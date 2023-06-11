@@ -1,10 +1,10 @@
 import HeadTitle from "../../../components/HeadTitle";
 import PageTitle from "../../../components/PageTitle";
 import ClassesCard from "../../Shared/ClassesCard/ClassesCard";
-import useClasses from "../../../hooks/useClasses";
+import useApprovedClasses from "../../../hooks/useApprovedClasses";
 
 const Courses = () => {
-  const [availableClasses] = useClasses();
+  const [approvedClasses] = useApprovedClasses();
 
   return (
     <>
@@ -12,7 +12,7 @@ const Courses = () => {
       <section className="py-10">
         <HeadTitle first="Our" last="Classes"></HeadTitle>
         <div className="grid gap-4 gap-y-10 grid-cols md:grid-cols-3">
-          {availableClasses.map((cls) => (
+          {approvedClasses.map((cls) => (
             <ClassesCard cls={cls} key={cls._id}></ClassesCard>
           ))}
         </div>

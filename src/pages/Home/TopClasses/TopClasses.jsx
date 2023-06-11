@@ -7,10 +7,10 @@ import HeadTitle from "../../../components/HeadTitle";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation, Autoplay } from "swiper";
-import useClasses from "../../../hooks/useClasses";
+import useApprovedClasses from "../../../hooks/useApprovedClasses";
 
 const TopClasses = () => {
-  const [availableClasses] = useClasses();
+  const [approvedClasses] = useApprovedClasses();
   return (
     <section className="mb-10">
       <HeadTitle first="Our" last="Classes"></HeadTitle>
@@ -29,7 +29,7 @@ const TopClasses = () => {
           disableOnInteraction: false,
         }}
       >
-        {availableClasses.map((cls) => (
+        {approvedClasses.map((cls) => (
           <SwiperSlide key={cls._id}>
             <ClassesCard cls={cls}></ClassesCard>
           </SwiperSlide>

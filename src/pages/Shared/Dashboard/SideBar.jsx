@@ -1,5 +1,6 @@
 import {
   FaCartArrowDown,
+  FaDashcube,
   FaHome,
   FaUser,
   FaUserFriends,
@@ -32,6 +33,16 @@ const SideBar = ({ children }) => {
           <li>
             <NavLink to="/dashboard/users">
               <FaUsers></FaUsers> All Users
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/classes">
+              <FaDashcube></FaDashcube> Manage Classes
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/my-classes">
+              <FaDashcube></FaDashcube> My Classes
             </NavLink>
           </li>
           <li>

@@ -14,7 +14,7 @@ const AllUsers = () => {
   const allUsers = users.filter((data) => data.email !== user.email);
 
   const handleRole = async (id, role) => {
-    const updateRes = await axiosIntercept.patch(`users/role/${id}`, {
+    const updateRes = await axiosIntercept.patch(`admin/users/role/${id}`, {
       role: role,
     });
     if (updateRes.status === 200) {
