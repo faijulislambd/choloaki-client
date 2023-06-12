@@ -8,8 +8,19 @@ import {
   FaUserGraduate,
   FaUsers,
 } from "react-icons/fa";
+import { FiLogOut } from "react-icons/fi";
 import { Link, NavLink } from "react-router-dom";
+import useInstructor from "../../../hooks/useInstructor";
+import useAdmin from "../../../hooks/useAdmin";
+import useStudent from "../../../hooks/useStudent";
+import useAuth from "../../../hooks/useAuth";
+
 const SideBar = ({ children }) => {
+  const [isAdmin] = useAdmin();
+  const [isInstructor] = useInstructor();
+  const [isStudent] = useStudent();
+  const { logout } = useAuth();
+
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -31,31 +42,43 @@ const SideBar = ({ children }) => {
               <FaUser></FaUser> Dashboard
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/dashboard/users">
-              <FaUsers></FaUsers> All Users
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/classes">
-              <FaDashcube></FaDashcube> Manage Classes
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/my-classes">
-              <FaDashcube></FaDashcube> My Classes
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/new-class">
-              <FaPenSquare></FaPenSquare> Create Class
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/cart">
-              <FaCartArrowDown></FaCartArrowDown> My Cart
-            </NavLink>
-          </li>
+          {isAdmin && (
+            <>
+              <li>
+                <NavLink to="/dashboard/users">
+                  <FaUsers></FaUsers> All Users
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/classes">
+                  <FaDashcube></FaDashcube> Manage Classes
+                </NavLink>
+              </li>
+            </>
+          )}
+          {isInstructor && (
+            <>
+              <li>
+                <NavLink to="/dashboard/my-classes">
+                  <FaDashcube></FaDashcube> My Classes
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/new-class">
+                  <FaPenSquare></FaPenSquare> Create Class
+                </NavLink>
+              </li>
+            </>
+          )}
+          {isStudent && (
+            <>
+              <li>
+                <NavLink to="/dashboard/cart">
+                  <FaCartArrowDown></FaCartArrowDown> My Cart
+                </NavLink>
+              </li>
+            </>
+          )}
           <div className="divider py-4"></div>
           <li>
             <Link to="/">
@@ -71,6 +94,16 @@ const SideBar = ({ children }) => {
             <Link to="/classes">
               <FaUserGraduate></FaUserGraduate> Classes
             </Link>
+          </li>
+          <li>
+            <button
+              className="btn btn-primary content-center"
+              onClick={() => {
+                logout();
+              }}
+            >
+              <FiLogOut></FiLogOut> Logout
+            </button>
           </li>
         </ul>
       </div>

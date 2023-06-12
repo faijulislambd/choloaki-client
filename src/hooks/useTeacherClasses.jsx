@@ -1,19 +1,22 @@
 import { useContext } from "react";
 import { UserContext } from "../providers/AuthProviders";
 import { useQuery } from "@tanstack/react-query";
+import useAxiosIntercept from "./useAxiosIntercept";
 
 const useTeacherClasses = () => {
   const { user } = useContext(UserContext);
+  const [axiosIntercept] = useAxiosIntercept();
+
   const { refetch, data: teacherClasses = [] } = useQuery({
     queryKey: ["teacherClasses", user?.email],
     queryFn: async () => {
-      const response = await fetch(
-        `http://localhost:5000/teacher/classes?email=${user.email}`
+      const response = await axiosIntercept(
+        `teacher/classes?email=${user.email}`
       );
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new Error("Network response was not ok");
       }
-      return response.json();
+      return response.data;
     },
   });
   return [teacherClasses, refetch];

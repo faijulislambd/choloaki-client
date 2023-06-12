@@ -40,6 +40,7 @@ const TeacherClasses = () => {
                 </div>
               </td>
               <td>{data.students.length}</td>
+              <td>{data.seats}</td>
               <td>{data.status}</td>
               <td>
                 <div className="flex items-center space-x-2">
@@ -47,7 +48,7 @@ const TeacherClasses = () => {
                     className="btn btn-sm btn-primary"
                     onClick={() => handleDetailModal(data)}
                   >
-                    Details
+                    Admin Feedback
                   </button>
                   <button
                     className="btn btn-sm btn-primary"

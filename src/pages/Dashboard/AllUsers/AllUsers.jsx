@@ -7,7 +7,7 @@ const AllUsers = () => {
   const { user } = useAuth();
   const [axiosIntercept] = useAxiosIntercept();
   const { data: users = [], refetch } = useQuery(["user"], async () => {
-    const response = await axiosIntercept.get("users");
+    const response = await axiosIntercept.get(`users?email=${user.email}`);
     return response.data;
   });
 
@@ -59,18 +59,28 @@ const AllUsers = () => {
                   </div>
                 </td>
                 <td>{data.email}</td>
-                <td>{data.role}</td>
+                <td>
+                  <span className="badge badge-success">{data.role}</span>
+                </td>
                 <td>
                   <div className="flex items-center space-x-2">
                     <button
                       className="btn btn-sm btn-primary"
                       onClick={() => handleRole(data._id, "admin")}
+                      style={{
+                        color: data.role === "admin" && "rgba(0,0,0,.2)",
+                      }}
+                      disabled={data.role === "admin" && true}
                     >
                       Make Admin
                     </button>
                     <button
                       className="btn btn-sm btn-primary"
                       onClick={() => handleRole(data._id, "instructor")}
+                      style={{
+                        color: data.role === "instructor" && "rgba(0,0,0,.2)",
+                      }}
+                      disabled={data.role === "instructor" && true}
                     >
                       Make Instructor
                     </button>

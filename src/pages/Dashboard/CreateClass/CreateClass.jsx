@@ -26,6 +26,7 @@ const CreateClass = () => {
     const seats = parseInt(data.seats);
     const status = "pending";
     const students = [];
+    const feedback = "";
     if (!loading) {
       const image = imageURL;
       const classData = {
@@ -37,6 +38,7 @@ const CreateClass = () => {
         seats,
         status,
         students,
+        feedback,
       };
       const response = await axiosIntercept.post(
         "teacher/new-class",
@@ -114,7 +116,7 @@ const CreateClass = () => {
                   <span className="label-text">Price</span>
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   placeholder="Price Of Seats"
                   className="input input-bordered"
                   {...register("price")}

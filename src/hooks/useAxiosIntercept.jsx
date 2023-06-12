@@ -4,7 +4,7 @@ import axios from "axios";
 import { useEffect } from "react";
 
 const useAxiosIntercept = () => {
-  const { logOut } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
 
   const axiosIntercept = axios.create({
@@ -27,13 +27,13 @@ const useAxiosIntercept = () => {
           error.response &&
           (error.response.status === 401 || error.response.status === 403)
         ) {
-          await logOut();
+          await logout();
           navigate("/login");
         }
         return Promise.reject(error);
       }
     );
-  }, [logOut, navigate, axiosIntercept]);
+  }, [logout, navigate, axiosIntercept]);
 
   return [axiosIntercept];
 };
