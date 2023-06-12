@@ -15,11 +15,21 @@ const TopClasses = () => {
     <section className="mb-10">
       <HeadTitle first="Our" last="Classes"></HeadTitle>
       <Swiper
-        slidesPerView={3}
+        breakpoints={{
+          640: {
+            slidesPerView: 1,
+          },
+          768: {
+            slidesPerView: 2,
+          },
+          1024: {
+            slidesPerView: 3,
+          },
+        }}
         spaceBetween={10}
         centeredSlides={true}
         modules={[Navigation, Autoplay]}
-        navigation={true}
+        navigation={false}
         className="mySwiper"
         loop
         autoplay={{

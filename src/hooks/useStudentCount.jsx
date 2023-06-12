@@ -2,20 +2,20 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "./useAuth";
 
-const useInstructors = () => {
+const useStudentCount = () => {
   const { user } = useAuth();
 
-  const { refetch, data: instructors = [] } = useQuery({
-    queryKey: ["instructors", user?.email],
+  const { refetch, data: count = [] } = useQuery({
+    queryKey: ["count", user?.email],
     queryFn: async () => {
-      const response = await axios.get(`http://localhost:5000/instructors`);
+      const response = await axios.get(`http://localhost:5000/student/count`);
       if (response.status !== 200) {
         throw new Error("Network response was not ok");
       }
       return response.data;
     },
   });
-  return [instructors, refetch];
+  return [count, refetch];
 };
 
-export default useInstructors;
+export default useStudentCount;

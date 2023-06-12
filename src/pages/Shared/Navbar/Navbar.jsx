@@ -6,12 +6,9 @@ import { useContext } from "react";
 import { UserContext } from "../../../providers/AuthProviders";
 import Swal from "sweetalert2";
 import useInsertCart from "../../../hooks/useInsertCart";
-import useStudent from "../../../hooks/useStudent";
 
 const Navbar = () => {
   const { user, logout } = useContext(UserContext);
-
-  const [isStudent] = useStudent();
 
   const [selectedLogo, setSelectedLogo] = useState(logo);
   const [checked, setChecked] = useState(true);
@@ -137,7 +134,7 @@ const Navbar = () => {
                       </li>
                     </ul>
                   </div>
-                  {isStudent && (
+                  {user?.role === "student" && (
                     <>
                       <div className="dropdown dropdown-end">
                         <label
