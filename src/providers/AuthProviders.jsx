@@ -15,6 +15,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 import useAxiosIntercept from "../hooks/useAxiosIntercept";
+import axios from "axios";
 
 export const UserContext = createContext(null);
 
@@ -41,6 +42,7 @@ const AuthProviders = ({ children }) => {
   };
 
   const logout = () => {
+    localStorage.removeItem("access-token");
     return signOut(auth);
   };
 
@@ -109,8 +111,15 @@ const AuthProviders = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log("auth state change", currentUser);
       setUser(currentUser);
+      // JWT Email Send
+      if (currentUser) {
+        axios
+          .post("http://localhost:5000/jwt", { email: currentUser.email })
+          .then((data) => {
+            localStorage.setItem("access-token", data.data.token);
+          });
+      }
       setLoading(false);
     });
     return () => {
