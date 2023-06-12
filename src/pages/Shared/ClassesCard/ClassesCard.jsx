@@ -69,7 +69,11 @@ const ClassesCard = ({ cls }) => {
       }`}
     >
       <figure className="relative">
-        <img src={cls.image} alt="Shoes" />
+        <img
+          src={cls.image}
+          alt={cls.name}
+          className="h-80 object-cover w-full"
+        />
         <div className="absolute badge badge-primary top-3 right-3 px-3 py-4 text-sm font-semibold">
           ${cls.price}
         </div>

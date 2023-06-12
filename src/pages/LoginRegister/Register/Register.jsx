@@ -33,41 +33,8 @@ const Register = () => {
     const email = data.email;
     const password = data.password;
     const confirm_password = data.confirm_password;
-    // imageUpload(data.image[0])
-    // Start and end metacharacters
-    const emptyFieldRegEx = /^\s*$/g;
 
-    if (emptyFieldRegEx.test(name)) {
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: "Name Felid Cannot Be Empty",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      return;
-    }
-    if (emptyFieldRegEx.test(email)) {
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: "Email Felid Cannot Be Empty",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      return;
-    }
-
-    if (password.length < 6) {
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: "Password Must Be Minimum 6 Characters Long",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      return;
-    }
+    loading && imageUpload(data.image[0]);
 
     if (!loading) {
       createUser(email, password)
@@ -122,8 +89,9 @@ const Register = () => {
                     type="text"
                     placeholder="Name"
                     className="input input-bordered"
-                    {...register("name")}
+                    {...register("name", { required: true })}
                   />
+                  {errors.name && <span>This field is required</span>}
                 </div>
 
                 <div className="form-control">
@@ -131,11 +99,20 @@ const Register = () => {
                     <span className="label-text">Email</span>
                   </label>
                   <input
-                    type="text"
+                    type="email"
                     placeholder="Email"
                     className="input input-bordered"
-                    {...register("email")}
+                    {...register("email", {
+                      required: true,
+                      pattern:
+                        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    })}
                   />
+                  {errors.name && (
+                    <span className="text-red-500 font-semibold text-sm">
+                      This field is required
+                    </span>
+                  )}
                 </div>
                 <div className="form-control">
                   <label className="label">

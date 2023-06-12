@@ -1,11 +1,16 @@
 import { useForm } from "react-hook-form";
 
-const ClassEditForm = ({ classData, handleForm }) => {
+const ClassEditForm = ({
+  classData,
+  handleForm,
+  handleImageUploadOnChange,
+}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const { name, images, class_instructor, instructor_email, seats, price } =
     classData;
   return (

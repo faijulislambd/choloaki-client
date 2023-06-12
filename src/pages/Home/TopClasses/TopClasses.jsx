@@ -17,13 +17,11 @@ const TopClasses = () => {
       <Swiper
         slidesPerView={3}
         spaceBetween={10}
-        modules={[Autoplay, Navigation]}
+        centeredSlides={true}
+        modules={[Navigation, Autoplay]}
         navigation={true}
         className="mySwiper"
-        pagination={{
-          clickable: true,
-        }}
-        loop={true}
+        loop
         autoplay={{
           delay: 1000,
           disableOnInteraction: false,

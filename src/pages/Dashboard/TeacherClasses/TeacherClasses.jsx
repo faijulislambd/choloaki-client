@@ -4,13 +4,21 @@ import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { FaTimes } from "react-icons/fa";
 import ClassEditForm from "./ClassEditForm";
+import useAxiosIntercept from "../../../hooks/useAxiosIntercept";
+import Swal from "sweetalert2";
+import useUploadImg from "../../../hooks/useUploadImg";
 
 const TeacherClasses = () => {
-  const [teacherClasses] = useTeacherClasses();
+  const [teacherClasses, refetch] = useTeacherClasses();
   const [feedback, setFeedback] = useState("");
   const [classData, setClassData] = useState(null);
   const [feedbackModal, setFeedbackModal] = useState(false);
   const [classEditModal, setClassEditModal] = useState(false);
+  const [axiosIntercept] = useAxiosIntercept();
+  const [imageUpload, imageURL, loading] = useUploadImg();
+  const handleImageUploadOnChange = (file) => {
+    imageUpload(file);
+  };
   const handleFeedbackModal = (feedback) => {
     setFeedback(feedback);
     setFeedbackModal(true);
@@ -24,7 +32,27 @@ const TeacherClasses = () => {
     setClassEditModal(true);
   };
   const handleEditForm = (data) => {
-    console.log(data);
+    loading && imageUpload(data.image[0]);
+    const name = data.name;
+    const price = data.price;
+    const seats = data.seats;
+    const image = data.image.length > 0 ? imageURL : classData.image;
+    const updatedClassData = { name, price, seats, image };
+    axiosIntercept
+      .patch(`/instructor/class/${classData._id}`, updatedClassData)
+      .then((data) => {
+        if (data.data.modifiedCount > 0) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Class Updated!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          refetch();
+          closeModal();
+        }
+      });
   };
   return (
     <>
@@ -37,6 +65,7 @@ const TeacherClasses = () => {
               <th>Class</th>
               <th>Number Of Students</th>
               <th>Available Seats</th>
+              <th>Price</th>
               <th>Status</th>
               <th></th>
             </tr>
@@ -59,6 +88,7 @@ const TeacherClasses = () => {
                 </td>
                 <td>{data.students.length}</td>
                 <td>{data.seats}</td>
+                <td>{data.price}</td>
                 <td>{data.status}</td>
                 <td>
                   <div className="flex items-center space-x-2">
@@ -173,6 +203,7 @@ const TeacherClasses = () => {
                   <ClassEditForm
                     classData={classData}
                     handleForm={handleEditForm}
+                    handleImageUploadOnChange={handleImageUploadOnChange}
                   ></ClassEditForm>
                 </Dialog.Panel>
               </Transition.Child>

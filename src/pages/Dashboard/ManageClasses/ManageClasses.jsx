@@ -19,7 +19,6 @@ const ManageClasses = () => {
   const [allClasses, refetch] = useAllClasses();
   const [axiosIntercept] = useAxiosIntercept();
   const [classID, setClassID] = useState("");
-  const [feedbackState, setFeedbackState] = useState(false);
   const handleClassStatus = async (id, status) => {
     const updateRes = await axiosIntercept.patch(`admin/class/status/${id}`, {
       status: status,
@@ -63,7 +62,6 @@ const ManageClasses = () => {
           reset();
           toggleModal();
           refetch();
-          setFeedbackState(true);
         }
       });
   };
