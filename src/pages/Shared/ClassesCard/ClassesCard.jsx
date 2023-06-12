@@ -5,8 +5,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosIntercept from "../../../hooks/useAxiosIntercept";
 import { useState } from "react";
+import useStudent from "../../../hooks/useStudent";
 
 const ClassesCard = ({ cls }) => {
+  const [isStudent] = useStudent();
   const { user } = useContext(UserContext);
   const [, refetch] = useInsertCart();
   const navigate = useNavigate();
@@ -86,14 +88,21 @@ const ClassesCard = ({ cls }) => {
         <div>
           <strong>Available Seats:</strong> {seatsCount}
         </div>
+
         <div className="card-actions items-center mt-4">
-          <button
-            className="btn btn-primary"
-            disabled={seatsCount <= 0 ? true : false}
-            onClick={() => hangleAddToCart(cls)}
-          >
-            Add To Cart
-          </button>
+          {isStudent ? (
+            <button
+              className="btn btn-primary"
+              disabled={seatsCount <= 0 ? true : false}
+              onClick={() => hangleAddToCart(cls)}
+            >
+              Add To Cart
+            </button>
+          ) : (
+            <span className="badge badge-primary p-4 font-semibold uppercase">
+              Only Students Can Enroll
+            </span>
+          )}
         </div>
       </div>
     </div>
