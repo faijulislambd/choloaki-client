@@ -8,6 +8,34 @@ import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosIntercept from "../../../hooks/useAxiosIntercept";
 import SocialLogin from "../../../components/SocialLogin";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const formSchema = yup.object().shape({
+  name: yup.string().required("Name is required"),
+  email: yup
+    .string()
+    .required("Email is required")
+    .matches(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      "Must be a valid mail"
+    ),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(6, "Password length should be at least 6 characters")
+    .max(20, "Password cannot exceed more than 20 characters")
+    .matches(
+      /(?=.*[A-Z])(?=.*[!@#$&*])/,
+      "Must contain one capital and one spacial character"
+    ),
+
+  confirmPassword: yup
+    .string()
+    .required("Confirm Password is required")
+    .oneOf([yup.ref("password")], "Passwords do not match"),
+  image: yup.string().required("Image is required"),
+});
 
 const Register = () => {
   const [passwordState, setPasswordState] = useState(true);
@@ -17,7 +45,9 @@ const Register = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(formSchema),
+  });
   const [axiosIntercept] = useAxiosIntercept();
   const [imageUpload, imageURL, loading] = useUploadImg();
   const navigate = useNavigate();
@@ -32,7 +62,6 @@ const Register = () => {
     const name = data.name;
     const email = data.email;
     const password = data.password;
-    const confirm_password = data.confirm_password;
 
     loading && imageUpload(data.image[0]);
 
@@ -89,9 +118,13 @@ const Register = () => {
                     type="text"
                     placeholder="Name"
                     className="input input-bordered"
-                    {...register("name", { required: true })}
+                    {...register("name")}
                   />
-                  {errors.name && <span>This field is required</span>}
+                  {errors.name && (
+                    <span className="text-red-500 font-semibold text-sm mt-2 border-2 border-red-400 rounded-full p-2">
+                      {errors.name?.message}
+                    </span>
+                  )}
                 </div>
 
                 <div className="form-control">
@@ -102,15 +135,11 @@ const Register = () => {
                     type="email"
                     placeholder="Email"
                     className="input input-bordered"
-                    {...register("email", {
-                      required: true,
-                      pattern:
-                        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                    })}
+                    {...register("email")}
                   />
-                  {errors.name && (
-                    <span className="text-red-500 font-semibold text-sm">
-                      This field is required
+                  {errors.email && (
+                    <span className="text-red-500 font-semibold text-sm mt-2 border-2 border-red-400 rounded-full p-2">
+                      {errors.email?.message}
                     </span>
                   )}
                 </div>
@@ -136,6 +165,11 @@ const Register = () => {
                       )}
                     </div>
                   </div>
+                  {errors.password && (
+                    <span className="text-red-500 font-semibold text-sm mt-2 border-2 border-red-400 rounded-full p-2">
+                      {errors.password?.message}
+                    </span>
+                  )}
                 </div>
                 <div className="form-control">
                   <label className="label">
@@ -146,7 +180,7 @@ const Register = () => {
                       type={confirmPasswordState ? "password" : "text"}
                       placeholder="Rewrite Password"
                       className="input input-bordered w-full"
-                      {...register("confirm_password")}
+                      {...register("confirmPassword")}
                     />
                     <div
                       className="absolute inset-y-4 right-4 cursor-pointer"
@@ -161,6 +195,11 @@ const Register = () => {
                       )}
                     </div>
                   </div>
+                  {errors.confirmPassword && (
+                    <span className="text-red-500 font-semibold text-sm mt-2 border-2 border-red-400 rounded-full p-2">
+                      {errors.confirmPassword?.message}
+                    </span>
+                  )}
                 </div>
                 <div className="form-control">
                   <label className="label">
@@ -176,6 +215,11 @@ const Register = () => {
                     }
                   />
                 </div>
+                {errors.image && (
+                  <span className="text-red-500 font-semibold text-sm mt-2 border-2 border-red-400 rounded-full p-2">
+                    {errors.image?.message}
+                  </span>
+                )}
                 <div className="form-control mt-6">
                   <input
                     type="submit"
