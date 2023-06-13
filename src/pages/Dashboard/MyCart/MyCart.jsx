@@ -4,6 +4,8 @@ import useAxiosIntercept from "../../../hooks/useAxiosIntercept";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import useGetSeat from "../../../hooks/useGetSeat";
+import PageTitle from "../../../components/PageTitle";
+import { Link } from "react-router-dom";
 
 const MyCart = () => {
   const [axiosIntercept] = useAxiosIntercept();
@@ -68,6 +70,7 @@ const MyCart = () => {
 
   return (
     <>
+      <PageTitle title="My Cart"></PageTitle>
       <div className="stats bg-base-200 text-primary-content w-full mb-4">
         <div className="stat">
           <div className="stat-title text-slate-400">Total Items</div>
@@ -78,7 +81,9 @@ const MyCart = () => {
           <div className="stat-title text-slate-400">Total Cost</div>
           <div className="stat-value text-slate-300">${totalCartCost}</div>
           <div className="stat-actions">
-            <button className="btn btn-sm btn-primary">Pay</button>
+            <Link to="/dashboard/payment" className="btn btn-sm btn-primary">
+              Pay
+            </Link>
           </div>
         </div>
       </div>

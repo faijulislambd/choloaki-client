@@ -7,6 +7,7 @@ import ClassEditForm from "./ClassEditForm";
 import useAxiosIntercept from "../../../hooks/useAxiosIntercept";
 import Swal from "sweetalert2";
 import useUploadImg from "../../../hooks/useUploadImg";
+import PageTitle from "../../../components/PageTitle";
 
 const TeacherClasses = () => {
   const [teacherClasses, refetch] = useTeacherClasses();
@@ -86,6 +87,7 @@ const TeacherClasses = () => {
 
   return (
     <>
+      <PageTitle title="My Classes"></PageTitle>
       <div className="overflow-x-auto">
         <table className="table text-black">
           {/* head */}
