@@ -3,39 +3,15 @@ import useInsertCart from "../../../hooks/useInsertCart";
 import useAxiosIntercept from "../../../hooks/useAxiosIntercept";
 import Swal from "sweetalert2";
 import { useState } from "react";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
 import useGetSeat from "../../../hooks/useGetSeat";
 
 const MyCart = () => {
   const [axiosIntercept] = useAxiosIntercept();
-  const [currentSeat, setCurrentSeat] = useState(null);
   const [currentCartID, setCartClassID] = useState(null);
   const [currentClassID, setCurrentClassID] = useState(null);
   const [cartDeleted, setCartDeleted] = useState(false);
-  const [loading, setLoading] = useState(true);
-  // const [getClassSeat, currentSeat, loading] = useGetSeat();
+  const [getClassSeat, currentSeat, loading] = useGetSeat();
   const [cart, refetch] = useInsertCart();
-  // const {
-  //   data: seat = [],
-  //   isLoading,
-  //   isError,
-  //   error,
-  // } = useQuery("seat", fetchData);
-
-  const getSeat = async (id) => {
-    await axiosIntercept
-      .get(`classes/seat/${id}`)
-      .then((res) => {
-        if (res.status === 200) {
-          setCurrentSeat(res.data.seats);
-          setLoading(false);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  };
 
   const cartRemove = () => {
     Swal.fire({
@@ -80,7 +56,7 @@ const MyCart = () => {
   };
 
   const handleCartDelete = async (id, course_id) => {
-    await getSeat(course_id);
+    await getClassSeat(course_id);
     setCartClassID(id);
     setCurrentClassID(course_id);
     setCartDeleted(true);
@@ -88,9 +64,24 @@ const MyCart = () => {
 
   if (currentSeat !== null && currentClassID !== null && cartDeleted)
     cartRemove();
+  const totalCartCost = cart.reduce((sum, item) => item.price + sum, 0);
 
   return (
     <>
+      <div className="stats bg-base-200 text-primary-content w-full mb-4">
+        <div className="stat">
+          <div className="stat-title text-slate-400">Total Items</div>
+          <div className="stat-value text-slate-300 text-md">{cart.length}</div>
+        </div>
+
+        <div className="stat">
+          <div className="stat-title text-slate-400">Total Cost</div>
+          <div className="stat-value text-slate-300">${totalCartCost}</div>
+          <div className="stat-actions">
+            <button className="btn btn-sm btn-primary">Pay</button>
+          </div>
+        </div>
+      </div>
       <div className="overflow-x-auto">
         <table className="table text-black">
           {/* head */}

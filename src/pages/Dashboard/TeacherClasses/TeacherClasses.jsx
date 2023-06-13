@@ -54,6 +54,36 @@ const TeacherClasses = () => {
         }
       });
   };
+
+  const handleClassDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await axiosIntercept
+          .delete(`teacher/class/${id}`)
+          .then(async (data) => {
+            if (data.data.deletedCount > 0) {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Class Deleted!",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              refetch();
+            }
+          });
+      }
+    });
+  };
+
   return (
     <>
       <div className="overflow-x-auto">
@@ -108,6 +138,12 @@ const TeacherClasses = () => {
                     ) : (
                       <></>
                     )}
+                    <button
+                      className="btn btn-error btn-sm"
+                      onClick={() => handleClassDelete(data._id)}
+                    >
+                      Delete Class
+                    </button>
                   </div>
                 </td>
               </tr>

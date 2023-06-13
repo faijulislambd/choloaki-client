@@ -22,7 +22,7 @@ const CreateClass = () => {
     const name = data.name;
     const class_instructor = user.displayName;
     const instructor_email = user.email;
-    const price = parseFloat(data.price);
+    const price = parseFloat(parseFloat(data.price).toFixed(2));
     const seats = parseInt(data.seats);
     const status = "pending";
     const students = [];
