@@ -6,7 +6,9 @@ import { loadStripe } from "@stripe/stripe-js";
 
 const Payment = () => {
   const [cart] = useInsertCart();
+
   const totalCartCost = cart.reduce((sum, item) => item.price + sum, 0);
+  const total = parseFloat(totalCartCost.toFixed(2));
   const stripePromise = loadStripe(import.meta.env.VITE_PAMENT_KEY);
 
   return (
@@ -14,8 +16,9 @@ const Payment = () => {
       <PageTitle title="Payment"></PageTitle>
       <div>Total Items : {cart.length}</div>
       <div>Total Price : {totalCartCost}</div>
+
       <Elements stripe={stripePromise}>
-        <CheckOutForm></CheckOutForm>
+        <CheckOutForm total={total}></CheckOutForm>
       </Elements>
     </>
   );
