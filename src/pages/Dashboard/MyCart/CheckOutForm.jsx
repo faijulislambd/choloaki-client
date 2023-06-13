@@ -4,14 +4,17 @@ import { useState } from "react";
 import useAxiosIntercept from "../../../hooks/useAxiosIntercept";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
+import "./Payment.css";
 
-const CheckOutForm = ({ total }) => {
+const CheckOutForm = ({ total, cart }) => {
   const stripe = useStripe();
   const elements = useElements();
   const { user } = useAuth();
   const [errorMessage, setErrorMessage] = useState("");
   const [axiosIntercept] = useAxiosIntercept();
   const [clientSecret, setClientSecret] = useState("");
+  const [processing, setProcessing] = useState(false);
+  const [transactionID, setTransactionID] = useState("");
 
   useEffect(() => {
     axiosIntercept
@@ -45,6 +48,7 @@ const CheckOutForm = ({ total }) => {
       console.log("[PaymentMethod]", paymentMethod);
       setErrorMessage("");
     }
+    setProcessing(true);
     const { paymentIntent, error: confirmError } =
       await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
@@ -58,14 +62,31 @@ const CheckOutForm = ({ total }) => {
     if (confirmError) {
       setErrorMessage(confirmError);
     }
+
+    setProcessing(false);
+
     if (paymentIntent.status === "succeeded") {
-      const transactionID = paymentIntent.id;
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Payment Success!",
-        showConfirmButton: false,
-        timer: 1500,
+      setTransactionID(paymentIntent.id);
+      const payment = {
+        email: user?.email,
+        transactionId: paymentIntent.id,
+        price: total,
+        date: new Date(),
+        quantity: cart.length,
+        cart_ids: cart.map((item) => item._id),
+        classes_ids: cart.map((item) => item.course_id),
+        classes_names: cart.map((item) => item.name),
+      };
+      axiosIntercept.post("/payments", payment).then((res) => {
+        if (res.status === 200) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Payment Success!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
       });
     }
   };
@@ -93,8 +114,8 @@ const CheckOutForm = ({ total }) => {
       />
       <button
         type="submit"
-        disabled={!stripe || !clientSecret}
-        className="btn btn-sm btn-primary mt-4 rounded-full"
+        disabled={!stripe || !clientSecret || processing}
+        className="btn btn-sm btn-primary rounded-full"
       >
         Pay
       </button>

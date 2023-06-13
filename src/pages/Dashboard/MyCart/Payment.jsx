@@ -18,7 +18,7 @@ const Payment = () => {
       <div>Total Price : {totalCartCost}</div>
 
       <Elements stripe={stripePromise}>
-        <CheckOutForm total={total}></CheckOutForm>
+        <CheckOutForm total={total} cart={cart}></CheckOutForm>
       </Elements>
     </>
   );
