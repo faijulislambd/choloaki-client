@@ -13,6 +13,9 @@ import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 import TeacherClasses from "../pages/Dashboard/TeacherClasses/TeacherClasses";
 import ManageClasses from "../pages/Dashboard/ManageClasses/ManageClasses";
 import CreateClass from "../pages/Dashboard/CreateClass/CreateClass";
+import InstructorRoute from "./InstructorRoute";
+import AdminRoute from "./AdminRoute";
+import StudentRoute from "./StudentRoute";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -54,23 +57,43 @@ export const router = createBrowserRouter([
       },
       {
         path: "cart",
-        element: <MyCart></MyCart>,
+        element: (
+          <StudentRoute>
+            <MyCart></MyCart>
+          </StudentRoute>
+        ),
       },
       {
         path: "users",
-        element: <AllUsers></AllUsers>,
+        element: (
+          <AdminRoute>
+            <AllUsers></AllUsers>
+          </AdminRoute>
+        ),
       },
       {
         path: "my-classes",
-        element: <TeacherClasses></TeacherClasses>,
+        element: (
+          <InstructorRoute>
+            <TeacherClasses></TeacherClasses>
+          </InstructorRoute>
+        ),
       },
       {
         path: "classes",
-        element: <ManageClasses></ManageClasses>,
+        element: (
+          <AdminRoute>
+            <ManageClasses></ManageClasses>
+          </AdminRoute>
+        ),
       },
       {
         path: "new-class",
-        element: <CreateClass></CreateClass>,
+        element: (
+          <InstructorRoute>
+            <CreateClass></CreateClass>
+          </InstructorRoute>
+        ),
       },
     ],
   },

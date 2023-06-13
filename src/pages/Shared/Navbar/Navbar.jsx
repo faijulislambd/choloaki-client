@@ -2,16 +2,23 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "./../../../assets/logo/choloaki-logo.svg";
 import logoDark from "./../../../assets/logo/choloaki-logo-dark.svg";
-import { useContext } from "react";
-import { UserContext } from "../../../providers/AuthProviders";
 import Swal from "sweetalert2";
 import useInsertCart from "../../../hooks/useInsertCart";
+import { useEffect } from "react";
+import useAuth from "../../../hooks/useAuth";
 
 const Navbar = () => {
-  const { user, logout } = useContext(UserContext);
+  const { user, logout } = useAuth();
 
   const [selectedLogo, setSelectedLogo] = useState(logo);
   const [checked, setChecked] = useState(true);
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/users/role/${user?.email}`)
+      .then((res) => res.json())
+      .then((data) => setRole(data.role));
+  }, []);
 
   const light = "cupcake";
   const dark = "forest";
@@ -134,7 +141,8 @@ const Navbar = () => {
                       </li>
                     </ul>
                   </div>
-                  {user?.role === "student" && (
+
+                  {role === "student" && (
                     <>
                       <div className="dropdown dropdown-end">
                         <label

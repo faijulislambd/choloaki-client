@@ -9,7 +9,6 @@ const useAdmin = () => {
     queryKey: ["isAdmin", user?.email],
     queryFn: async () => {
       const res = await axiosIntercept.get(`/user/admin/${user?.email}`);
-      console.log(res);
       return res.data.admin;
     },
   });

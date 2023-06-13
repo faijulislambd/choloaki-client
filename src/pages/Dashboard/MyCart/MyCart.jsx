@@ -9,21 +9,35 @@ import useGetSeat from "../../../hooks/useGetSeat";
 
 const MyCart = () => {
   const [axiosIntercept] = useAxiosIntercept();
-  // const [loading, setLoading] = useState(true);
-  const [getClassSeat, currentSeat, loading] = useGetSeat();
+  const [currentSeat, setCurrentSeat] = useState(null);
+  const [currentCartID, setCartClassID] = useState(null);
+  const [currentClassID, setCurrentClassID] = useState(null);
+  const [cartDeleted, setCartDeleted] = useState(false);
+  const [loading, setLoading] = useState(true);
+  // const [getClassSeat, currentSeat, loading] = useGetSeat();
   const [cart, refetch] = useInsertCart();
-  // const [currentSeat, setCurrentSeat] = useState(0);
   // const {
   //   data: seat = [],
   //   isLoading,
   //   isError,
   //   error,
   // } = useQuery("seat", fetchData);
-  const handleCartDelete = async (id, course_id) => {
-    await getClassSeat(course_id);
-    if (!loading) {
-      console.log(currentSeat);
-    }
+
+  const getSeat = async (id) => {
+    await axiosIntercept
+      .get(`classes/seat/${id}`)
+      .then((res) => {
+        if (res.status === 200) {
+          setCurrentSeat(res.data.seats);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
+
+  const cartRemove = () => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -32,13 +46,16 @@ const MyCart = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
+    }).then(async (result) => {
       if (!loading) {
         if (result.isConfirmed) {
-          fetch(`http://localhost:5000/cart/${id}`, { method: "DELETE" })
-            .then((res) => res.json())
+          axiosIntercept
+            .delete(`http://localhost:5000/cart/${currentCartID}`)
             .then(async (data) => {
-              if (data.deletedCount > 0) {
+              console.log(data.data.deletedCount);
+              if (data.data.deletedCount > 0) {
+                setCartDeleted(false);
+
                 Swal.fire({
                   position: "top-end",
                   icon: "success",
@@ -48,13 +65,12 @@ const MyCart = () => {
                 });
                 refetch();
                 const oldSeat = { seats: currentSeat + 1 };
-
                 const updateSeatCount = await axiosIntercept.patch(
-                  `classes/seat/${course_id}`,
+                  `classes/seat/${currentClassID}`,
                   oldSeat
                 );
                 if (updateSeatCount.status === 200) {
-                  console.log("Seats Updated");
+                  console.log("Cart Update");
                 }
               }
             });
@@ -62,6 +78,16 @@ const MyCart = () => {
       }
     });
   };
+
+  const handleCartDelete = async (id, course_id) => {
+    await getSeat(course_id);
+    setCartClassID(id);
+    setCurrentClassID(course_id);
+    setCartDeleted(true);
+  };
+
+  if (currentSeat !== null && currentClassID !== null && cartDeleted)
+    cartRemove();
 
   return (
     <>
