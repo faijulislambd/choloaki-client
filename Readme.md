@@ -1,12 +1,12 @@
-# Welcome To [AKUSHONTOY](https://akushontoy.web.app "AKUSHONTOY")
+# Welcome To [Choloaki](https://choloaki-db2c8.web.app "Choloaki")
 
 ## My Website Live Link:
 
-**<https://akushontoy.web.app/>**
+**<https://choloaki-db2c8.web.app/>**
 
-## My Website Client Git Repo Link:
+## My Website Client Git Private Repo Link:
 
-**<https://github.com/faijulislambd/akushontoy-client.git>**
+**<https://github.com/programming-hero-web-course1/b712-summer-camp-client-side-faijulislambd.git>**
 
 ## My Server Link:
 
