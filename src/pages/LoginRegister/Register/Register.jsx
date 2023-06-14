@@ -27,7 +27,7 @@ const formSchema = yup.object().shape({
     .min(6, "Password length should be at least 6 characters")
     .max(20, "Password cannot exceed more than 20 characters")
     .matches(
-      /(?=.*[A-Z])(?=.*[!@#$&*])/,
+      /(?=.*[A-Z])(?=.*[!@#$&*_-~])/,
       "Must contain one capital and one spacial character"
     ),
 
