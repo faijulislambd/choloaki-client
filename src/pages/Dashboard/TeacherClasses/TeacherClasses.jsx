@@ -103,6 +103,13 @@ const TeacherClasses = () => {
             </tr>
           </thead>
           <tbody>
+            {teacherClasses.length <= 0 && (
+              <tr>
+                <td colSpan={7} className="text-center">
+                  No Classes Created Yet{" "}
+                </td>
+              </tr>
+            )}
             {teacherClasses.map((data, index) => (
               <tr key={data._id}>
                 <td>{index + 1}</td>

@@ -32,6 +32,13 @@ const Transactions = () => {
             </tr>
           </thead>
           <tbody>
+            {transactions.length <= 0 && (
+              <tr>
+                <td colSpan={4} className="text-center">
+                  No Transactions Yet{" "}
+                </td>
+              </tr>
+            )}
             {transactions.map((data, index) => (
               <tr key={data._id}>
                 <td>{index + 1}</td>

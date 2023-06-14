@@ -33,7 +33,6 @@ const MyCart = () => {
               console.log(data.data.deletedCount);
               if (data.data.deletedCount > 0) {
                 setCartDeleted(false);
-
                 Swal.fire({
                   position: "top-end",
                   icon: "success",
@@ -42,12 +41,15 @@ const MyCart = () => {
                   timer: 1500,
                 });
                 refetch();
+
                 const oldSeat = { seats: currentSeat + 1 };
                 const updateSeatCount = await axiosIntercept.patch(
                   `classes/seat/${currentClassID}`,
                   oldSeat
                 );
                 if (updateSeatCount.status === 200) {
+                  refetch();
+
                   console.log("Cart Update");
                 }
               }
@@ -99,6 +101,13 @@ const MyCart = () => {
             </tr>
           </thead>
           <tbody>
+            {cart.length <= 0 && (
+              <tr>
+                <td colSpan={4} className="text-center">
+                  No Items Added To Cart Yet{" "}
+                </td>
+              </tr>
+            )}
             {cart.map((cartItem, index) => (
               <tr key={cartItem._id}>
                 <td>{index + 1}</td>

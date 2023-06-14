@@ -5,9 +5,9 @@ import useAxiosIntercept from "../../../hooks/useAxiosIntercept";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
 import "./Payment.css";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const CheckOutForm = ({ total, cart }) => {
+const CheckOutForm = ({ total, cart, refetch }) => {
   const stripe = useStripe();
   const elements = useElements();
   const { user } = useAuth();
@@ -16,16 +16,16 @@ const CheckOutForm = ({ total, cart }) => {
   const [clientSecret, setClientSecret] = useState("");
   const [processing, setProcessing] = useState(false);
   const [transactionID, setTransactionID] = useState("");
+  const navigate = useNavigate();
+  useEffect(() => {
+    axiosIntercept
+      .post("/create-payment-intent", { price: total })
+      .then((res) => {
+        setClientSecret(res.data.clientSecret);
+      });
+  }, [total]);
 
   const handleSubmit = async (e) => {
-    const navigate = useNavigate();
-    useEffect(() => {
-      axiosIntercept
-        .post("/create-payment-intent", { price: total })
-        .then((res) => {
-          setClientSecret(res.data.clientSecret);
-        });
-    }, []);
     e.preventDefault();
 
     if (!stripe || !elements) {
@@ -80,6 +80,9 @@ const CheckOutForm = ({ total, cart }) => {
       };
       axiosIntercept.post("/payments", payment).then((res) => {
         if (res.status === 200) {
+          refetch();
+          navigate("/dashboard/enrolled");
+
           Swal.fire({
             position: "top-end",
             icon: "success",
@@ -87,7 +90,6 @@ const CheckOutForm = ({ total, cart }) => {
             showConfirmButton: false,
             timer: 1500,
           });
-          <Navigate to="/dashboard/enrolled"></Navigate>;
         }
       });
     }
@@ -96,7 +98,7 @@ const CheckOutForm = ({ total, cart }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="card w-1/2 mx-auto border-2 mt-4 p-5"
+      className="card w-1/2 mx-auto border-2 mt-4 p-5 shadow-2xl bg-slate-800  text-white"
     >
       <CardElement
         options={{

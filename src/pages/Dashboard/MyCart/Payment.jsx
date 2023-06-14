@@ -5,7 +5,7 @@ import CheckOutForm from "./CheckOutForm";
 import { loadStripe } from "@stripe/stripe-js";
 
 const Payment = () => {
-  const [cart] = useInsertCart();
+  const [cart, refetch] = useInsertCart();
 
   const totalCartCost = cart.reduce((sum, item) => item.price + sum, 0);
   const total = parseFloat(totalCartCost.toFixed(2));
@@ -13,12 +13,25 @@ const Payment = () => {
 
   return (
     <>
-      <PageTitle title="Payment"></PageTitle>
-      <div>Total Items : {cart.length}</div>
-      <div>Total Price : {totalCartCost}</div>
+      <PageTitle title="Payment Portal"></PageTitle>
+      <div className="stats bg-base-200 text-primary-content w-full mb-4">
+        <div className="stat">
+          <div className="stat-title text-slate-400">Total Items</div>
+          <div className="stat-value text-slate-300 text-md">{cart.length}</div>
+        </div>
+
+        <div className="stat">
+          <div className="stat-title text-slate-400">Total Cost</div>
+          <div className="stat-value text-slate-300">${totalCartCost}</div>
+        </div>
+      </div>
 
       <Elements stripe={stripePromise}>
-        <CheckOutForm total={total} cart={cart}></CheckOutForm>
+        <CheckOutForm
+          total={total}
+          cart={cart}
+          refetch={refetch}
+        ></CheckOutForm>
       </Elements>
     </>
   );

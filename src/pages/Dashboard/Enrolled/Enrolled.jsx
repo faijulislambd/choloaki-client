@@ -18,6 +18,7 @@ const Enrolled = () => {
   return (
     <>
       <PageTitle title="Enrolled"></PageTitle>
+
       <div className="overflow-x-auto">
         <table className="table text-black">
           {/* head */}
@@ -30,6 +31,13 @@ const Enrolled = () => {
             </tr>
           </thead>
           <tbody>
+            {enrolledClasses.length <= 0 && (
+              <tr>
+                <td colSpan={4} className="text-center">
+                  No Classes Enrolled Yet{" "}
+                </td>
+              </tr>
+            )}
             {enrolledClasses.map((data, index) => (
               <tr key={data._id}>
                 <td>{index + 1}</td>

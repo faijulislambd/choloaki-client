@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosIntercept from "../../../hooks/useAxiosIntercept";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
+import PageTitle from "../../../components/PageTitle";
 
 const AllUsers = () => {
   const { user } = useAuth();
@@ -30,6 +31,7 @@ const AllUsers = () => {
   };
   return (
     <>
+      <PageTitle title="Manage Users"></PageTitle>
       <div className="overflow-x-auto">
         <table className="table text-black">
           {/* head */}
@@ -43,6 +45,13 @@ const AllUsers = () => {
             </tr>
           </thead>
           <tbody>
+            {allUsers.length <= 0 && (
+              <tr>
+                <td colSpan={5} className="text-center">
+                  No Users Have Joint Yet{" "}
+                </td>
+              </tr>
+            )}
             {allUsers.map((data, index) => (
               <tr key={data._id}>
                 <td>{index + 1}</td>
