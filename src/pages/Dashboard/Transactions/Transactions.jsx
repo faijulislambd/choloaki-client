@@ -3,6 +3,7 @@ import PageTitle from "../../../components/PageTitle";
 import useAxiosIntercept from "../../../hooks/useAxiosIntercept";
 import useAuth from "../../../hooks/useAuth";
 import { useState } from "react";
+import moment from "moment";
 
 const Transactions = () => {
   const { user } = useAuth();
@@ -50,7 +51,7 @@ const Transactions = () => {
                   </ul>
                 </td>
                 <td>{data.transactionId}</td>
-                <td>{data.date}</td>
+                <td>{moment(data.date).format("MMMM Do, YYYY [at] h:mm a")}</td>
               </tr>
             ))}
           </tbody>
