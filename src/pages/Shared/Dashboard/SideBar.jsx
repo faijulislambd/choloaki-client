@@ -1,6 +1,7 @@
 import {
   FaCartArrowDown,
   FaDashcube,
+  FaHistory,
   FaHome,
   FaPenSquare,
   FaUser,
@@ -75,6 +76,11 @@ const SideBar = ({ children }) => {
               <li>
                 <NavLink to="/dashboard/cart">
                   <FaCartArrowDown></FaCartArrowDown> My Cart
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/payment-history">
+                  <FaHistory></FaHistory> My Transactions
                 </NavLink>
               </li>
             </>

@@ -1,24 +1,11 @@
 /* These styles are used if a demo specific stylesheet is not present */
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
-
-body,
-html {
-  background-color: #f6f9fc;
-  font-size: 18px;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-}
-
-form {
+.StripeElement form {
   max-width: 800px;
   margin: 80px auto;
 }
 
-label {
+.StripeElement label {
   color: #6b7c93;
   font-weight: 300;
   letter-spacing: 0.025em;
@@ -26,7 +13,7 @@ label {
   display: block;
 }
 
-button {
+.StripeElement button {
   white-space: nowrap;
   border: 0;
   outline: 0;
@@ -48,7 +35,7 @@ button {
   margin-top: 10px;
 }
 
-button:hover {
+.StripeElement button:hover {
   color: #fff;
   cursor: pointer;
   background-color: #7795f8;
@@ -56,12 +43,12 @@ button:hover {
   box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
 }
 
-button[disabled] {
+.StripeElement button[disabled] {
   opacity: 0.6;
 }
 
-input,
-select {
+.StripeElement input,
+.StripeElement select {
   display: block;
   border: none;
   font-size: 18px;
@@ -77,23 +64,23 @@ select {
   width: 500px;
 }
 
-input::placeholder {
+.StripeElement input::placeholder {
   color: #aab7c4;
 }
 
-.result,
-.error {
+.StripeElement .result,
+.StripeElement .error {
   font-size: 16px;
   font-weight: bold;
   margin-top: 10px;
   margin-bottom: 20px;
 }
 
-.error {
+.StripeElement .error {
   color: #e4584c;
 }
 
-.result {
+.StripeElement .result {
   color: #666ee8;
 }
 

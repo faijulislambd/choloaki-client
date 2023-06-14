@@ -17,6 +17,7 @@ import InstructorRoute from "./InstructorRoute";
 import AdminRoute from "./AdminRoute";
 import StudentRoute from "./StudentRoute";
 import Payment from "../pages/Dashboard/MyCart/Payment";
+import Transactions from "../pages/Dashboard/Transactions/Transactions";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -69,6 +70,14 @@ export const router = createBrowserRouter([
         element: (
           <StudentRoute>
             <Payment></Payment>
+          </StudentRoute>
+        ),
+      },
+      {
+        path: "payment-history",
+        element: (
+          <StudentRoute>
+            <Transactions></Transactions>
           </StudentRoute>
         ),
       },
