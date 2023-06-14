@@ -3,6 +3,7 @@ import PageTitle from "../../../components/PageTitle";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosIntercept from "../../../hooks/useAxiosIntercept";
 import { FaFlipboard, FaUsers } from "react-icons/fa";
+import CountUp from "react-countup";
 
 const InstructorDashboard = () => {
   const { user } = useAuth();
@@ -32,7 +33,9 @@ const InstructorDashboard = () => {
                   <h2 className="card-title text-3xl">
                     <FaFlipboard></FaFlipboard> Classes
                   </h2>
-                  <p className="text-2xl font-semibold">{stats.classes || 0}</p>
+                  <p className="text-2xl font-semibold">
+                    <CountUp start={0} end={stats.classes} duration={2} />
+                  </p>
                 </div>
               </div>
             </div>
@@ -43,7 +46,7 @@ const InstructorDashboard = () => {
                     <FaUsers></FaUsers> Students
                   </h2>
                   <p className="text-2xl font-semibold">
-                    {stats.students || 0}
+                    <CountUp start={0} end={stats.students} duration={2} />
                   </p>
                 </div>
               </div>
@@ -54,7 +57,9 @@ const InstructorDashboard = () => {
                   <h2 className="card-title text-lg">
                     <FaFlipboard></FaFlipboard> Pending Classes
                   </h2>
-                  <p className="text-2xl font-semibold">{stats.pending || 0}</p>
+                  <p className="text-2xl font-semibold">
+                    <CountUp start={0} end={stats.pending} duration={2} />
+                  </p>
                 </div>
               </div>
             </div>
@@ -65,7 +70,7 @@ const InstructorDashboard = () => {
                     <FaFlipboard></FaFlipboard> Approved Classes
                   </h2>
                   <p className="text-2xl font-semibold">
-                    {stats.approved || 0}
+                    <CountUp start={0} end={stats.approved} duration={2} />
                   </p>
                 </div>
               </div>
@@ -76,7 +81,10 @@ const InstructorDashboard = () => {
                   <h2 className="card-title text-lg">
                     <FaFlipboard></FaFlipboard> Denied Classes
                   </h2>
-                  <p className="text-2xl font-semibold">{stats.denied || 0}</p>
+
+                  <p className="text-2xl font-semibold">
+                    <CountUp start={0} end={stats.denied} duration={2} />
+                  </p>
                 </div>
               </div>
             </div>

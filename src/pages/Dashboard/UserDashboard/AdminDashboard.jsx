@@ -3,6 +3,7 @@ import PageTitle from "../../../components/PageTitle";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosIntercept from "../../../hooks/useAxiosIntercept";
 import { FaFlipboard, FaUsers, FaWallet } from "react-icons/fa";
+import CountUp from "react-countup";
 
 const AdminDashboard = () => {
   const { user } = useAuth();
@@ -33,7 +34,12 @@ const AdminDashboard = () => {
                     <FaWallet></FaWallet> Earned
                   </h2>
                   <p className="text-2xl font-semibold">
-                    ${stats.totalIncome || 0}
+                    <CountUp
+                      start={0}
+                      end={stats.totalIncome}
+                      duration={2}
+                      decimals={2}
+                    />
                   </p>
                 </div>
               </div>
@@ -44,7 +50,9 @@ const AdminDashboard = () => {
                   <h2 className="card-title text-3xl">
                     <FaFlipboard></FaFlipboard> Classes
                   </h2>
-                  <p className="text-2xl font-semibold">{stats.classes || 0}</p>
+                  <p className="text-2xl font-semibold">
+                    <CountUp start={0} end={stats.classes} duration={2} />
+                  </p>
                 </div>
               </div>
             </div>
@@ -55,7 +63,7 @@ const AdminDashboard = () => {
                     <FaUsers></FaUsers> Instructors
                   </h2>
                   <p className="text-2xl font-semibold">
-                    {stats.instructors || 0}
+                    <CountUp start={0} end={stats.instructors} duration={2} />
                   </p>
                 </div>
               </div>
@@ -67,7 +75,7 @@ const AdminDashboard = () => {
                     <FaUsers></FaUsers> Students
                   </h2>
                   <p className="text-2xl font-semibold">
-                    {stats.students || 0}
+                    <CountUp start={0} end={stats.students} duration={2} />
                   </p>
                 </div>
               </div>

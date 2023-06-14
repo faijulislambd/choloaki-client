@@ -3,6 +3,7 @@ import PageTitle from "../../../components/PageTitle";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosIntercept from "../../../hooks/useAxiosIntercept";
 import { FaFlipboard, FaWallet } from "react-icons/fa";
+import CountUp from "react-countup";
 
 const StudentDashboard = () => {
   const { user } = useAuth();
@@ -33,7 +34,12 @@ const StudentDashboard = () => {
                     <FaWallet></FaWallet> Spent
                   </h2>
                   <p className="text-2xl font-semibold">
-                    ${stats.totalSpent || 0}
+                    <CountUp
+                      start={0}
+                      end={stats.totalSpent}
+                      duration={2}
+                      decimals={2}
+                    />
                   </p>
                 </div>
               </div>
@@ -45,7 +51,11 @@ const StudentDashboard = () => {
                     <FaFlipboard></FaFlipboard> Classes
                   </h2>
                   <p className="text-2xl font-semibold">
-                    {stats.enrolledClasses || 0}
+                    <CountUp
+                      start={0}
+                      end={stats.enrolledClasses}
+                      duration={2}
+                    />
                   </p>
                 </div>
               </div>

@@ -7,6 +7,7 @@ import useAxiosIntercept from "../../../hooks/useAxiosIntercept";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 const ClassesCard = ({ cls }) => {
   const { user } = useContext(UserContext);
@@ -72,7 +73,9 @@ const ClassesCard = ({ cls }) => {
   };
 
   return (
-    <div
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.9 }}
       className={`card w-96 shadow-xl ${
         seatsCount === 0 ? "bg-red-500" : "bg-base-200"
       }`}
@@ -97,7 +100,9 @@ const ClassesCard = ({ cls }) => {
         </div>
 
         <div className="card-actions items-center mt-4">
-          <button
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             className="btn btn-primary"
             disabled={
               seatsCount <= 0 || role === "admin" || role === "instructor"
@@ -107,10 +112,10 @@ const ClassesCard = ({ cls }) => {
             onClick={() => handleAddToCart(cls)}
           >
             Add To Cart
-          </button>
+          </motion.button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

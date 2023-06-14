@@ -1,10 +1,8 @@
-import { useEffect } from "react";
 import HeadTitle from "../../../components/HeadTitle";
 import useApprovedClasses from "../../../hooks/useApprovedClasses";
 import useInstructors from "../../../hooks/useInstructors";
-import { useState } from "react";
 import useStudentCount from "../../../hooks/useStudentCount";
-
+import CountUp from "react-countup";
 const CounterSection = () => {
   const [approvedClasses] = useApprovedClasses();
   const [instructors] = useInstructors();
@@ -17,19 +15,23 @@ const CounterSection = () => {
         <div className="stat">
           <div className="stat-figure text-primary"></div>
           <div className="stat-title font-semibold">Students</div>
-          <div className="stat-value text-primary">{count.count}</div>
+          <div className="stat-value text-primary">
+            <CountUp start={0} end={count.count} duration={2} />
+          </div>
         </div>
 
         <div className="stat">
           <div className="stat-figure text-secondary"></div>
           <div className="stat-title font-semibold">Instructors</div>
-          <div className="stat-value text-primary">{instructors.length}</div>
+          <div className="stat-value text-primary">
+            <CountUp start={0} end={instructors.length} duration={2} />
+          </div>
         </div>
 
         <div className="stat">
           <div className="stat-title font-semibold">Classes</div>
           <div className="stat-value text-primary">
-            {approvedClasses.length}
+            <CountUp start={0} end={approvedClasses.length} duration={2} />
           </div>
         </div>
       </div>

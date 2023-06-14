@@ -7,12 +7,16 @@ import useInsertCart from "../../../hooks/useInsertCart";
 import { useEffect } from "react";
 import useAuth from "../../../hooks/useAuth";
 import axios from "axios";
+import { useRef } from "react";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
-
+  const light = "cupcake";
+  const dark = "forest";
+  const [currentTheme, setCurrentTheme] = useState(light);
+  const checkboxRef = useRef(null);
   const [selectedLogo, setSelectedLogo] = useState(logo);
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(currentTheme);
   const [role, setRole] = useState("");
 
   useEffect(() => {
@@ -23,25 +27,36 @@ const Navbar = () => {
     );
   }, []);
 
-  const light = "cupcake";
-  const dark = "forest";
+  useEffect(() => {
+    if (localStorage.getItem("theme")) {
+      if (localStorage.getItem("theme") === dark) {
+        setSelectedLogo(logoDark);
+        checkboxRef.current.checked = false;
+      }
+      setCurrentTheme(localStorage.getItem("theme"));
+    } else {
+      localStorage.setItem("theme", light);
+      setCurrentTheme(light);
+    }
+  }, []);
 
   const [cart] = useInsertCart();
   const totalCartCost = cart.reduce((sum, item) => item.price + sum, 0);
 
-  const [currentTheme, setCurrentTheme] = useState(light);
   document.querySelector("html").setAttribute("data-theme", currentTheme);
 
-  const handleTheme = () => {
+  const handleTheme = (e) => {
     setChecked(!checked);
+    console.log(e.target.checked);
 
     if (currentTheme === light) {
       setCurrentTheme(dark);
       setSelectedLogo(logoDark);
-    }
-    if (currentTheme === dark) {
+      localStorage.setItem("theme", dark);
+    } else {
       setCurrentTheme(light);
       setSelectedLogo(logo);
+      localStorage.setItem("theme", light);
     }
   };
 
@@ -211,6 +226,7 @@ const Navbar = () => {
                 <input
                   type="checkbox"
                   className="toggle toggle-md"
+                  ref={checkboxRef}
                   checked={checked}
                   onChange={handleTheme}
                 />

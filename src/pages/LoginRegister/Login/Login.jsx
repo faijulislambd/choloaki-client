@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import SocialLogin from "../../../components/SocialLogin";
+import { motion } from "framer-motion";
 const Login = () => {
   const [passwordState, setPasswordState] = useState(true);
   const { signIn } = useAuth();
@@ -41,62 +42,68 @@ const Login = () => {
 
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col">
-          <div className="card w-full max-w-sm shadow-2xl bg-base-100 lg:scale-110">
-            <div className="card-body items-center">
-              <h1 className="card-title font-bold">Login now!</h1>
-              <form onSubmit={handleSubmit(onLogin)}>
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Email</span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="email"
-                    className="input input-bordered"
-                    {...register("email")}
-                  />
-                </div>
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Password</span>
-                  </label>
-                  <div className="relative">
+          <motion.div
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="card w-full max-w-sm shadow-2xl bg-base-100 lg:scale-110">
+              <div className="card-body items-center">
+                <h1 className="card-title font-bold">Login now!</h1>
+                <form onSubmit={handleSubmit(onLogin)}>
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Email</span>
+                    </label>
                     <input
-                      type={passwordState ? "password" : "text"}
-                      placeholder="password"
+                      type="text"
+                      placeholder="email"
                       className="input input-bordered"
-                      {...register("password")}
+                      {...register("email")}
                     />
-                    <div
-                      className="absolute inset-y-4 right-4 cursor-pointer"
-                      onClick={() => setPasswordState(!passwordState)}
-                    >
-                      {passwordState ? (
-                        <FaEyeSlash></FaEyeSlash>
-                      ) : (
-                        <FaEye></FaEye>
-                      )}
+                  </div>
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Password</span>
+                    </label>
+                    <div className="relative">
+                      <input
+                        type={passwordState ? "password" : "text"}
+                        placeholder="password"
+                        className="input input-bordered"
+                        {...register("password")}
+                      />
+                      <div
+                        className="absolute inset-y-4 right-4 cursor-pointer"
+                        onClick={() => setPasswordState(!passwordState)}
+                      >
+                        {passwordState ? (
+                          <FaEyeSlash></FaEyeSlash>
+                        ) : (
+                          <FaEye></FaEye>
+                        )}
+                      </div>
                     </div>
                   </div>
+                  <div className="form-control mt-6">
+                    <input
+                      type="submit"
+                      className="btn btn-primary"
+                      value="Login"
+                    />
+                  </div>
+                </form>
+                <div className="divider">Or Sign In With</div>
+                <SocialLogin navigate={navigate} from={from}></SocialLogin>
+                <div className="w-full block text-left text-xs mt-3">
+                  No Account?{" "}
+                  <Link className="btn-link" to="/register">
+                    Please Register Here!
+                  </Link>
                 </div>
-                <div className="form-control mt-6">
-                  <input
-                    type="submit"
-                    className="btn btn-primary"
-                    value="Login"
-                  />
-                </div>
-              </form>
-              <div className="divider">Or Sign In With</div>
-              <SocialLogin navigate={navigate} from={from}></SocialLogin>
-              <div className="w-full block text-left text-xs mt-3">
-                No Account?{" "}
-                <Link className="btn-link" to="/register">
-                  Please Register Here!
-                </Link>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </>

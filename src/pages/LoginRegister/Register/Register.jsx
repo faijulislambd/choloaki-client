@@ -10,6 +10,7 @@ import useAxiosIntercept from "../../../hooks/useAxiosIntercept";
 import SocialLogin from "../../../components/SocialLogin";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { motion } from "framer-motion";
 
 const formSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
@@ -106,139 +107,145 @@ const Register = () => {
 
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content lg:w-1/3 flex-col">
-          <div className="card w-full shadow-2xl bg-base-100 lg:scale-110">
-            <div className="card-body items-center">
-              <h1 className="card-title font-bold">Register now!</h1>
-              <form onSubmit={handleSubmit(onRegister)} className="w-full">
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Name</span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    className="input input-bordered"
-                    {...register("name")}
-                  />
-                  {errors.name && (
-                    <span className="text-red-500 font-semibold text-sm mt-2 border-2 border-red-400 rounded-full p-2">
-                      {errors.name?.message}
-                    </span>
-                  )}
-                </div>
-
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Email</span>
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    className="input input-bordered"
-                    {...register("email")}
-                  />
-                  {errors.email && (
-                    <span className="text-red-500 font-semibold text-sm mt-2 border-2 border-red-400 rounded-full p-2">
-                      {errors.email?.message}
-                    </span>
-                  )}
-                </div>
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Password</span>
-                  </label>
-                  <div className="relative">
+          <motion.div
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="card w-full shadow-2xl bg-base-100 lg:scale-110">
+              <div className="card-body items-center">
+                <h1 className="card-title font-bold">Register now!</h1>
+                <form onSubmit={handleSubmit(onRegister)} className="w-full">
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Name</span>
+                    </label>
                     <input
-                      type={passwordState ? "password" : "text"}
-                      placeholder="Password"
-                      className="input input-bordered w-full"
-                      {...register("password")}
+                      type="text"
+                      placeholder="Name"
+                      className="input input-bordered"
+                      {...register("name")}
                     />
-                    <div
-                      className="absolute inset-y-4 right-4 cursor-pointer"
-                      onClick={() => setPasswordState(!passwordState)}
-                    >
-                      {passwordState ? (
-                        <FaEyeSlash></FaEyeSlash>
-                      ) : (
-                        <FaEye></FaEye>
-                      )}
-                    </div>
+                    {errors.name && (
+                      <span className="text-red-500 font-semibold text-sm mt-2 border-2 border-red-400 rounded-full p-2">
+                        {errors.name?.message}
+                      </span>
+                    )}
                   </div>
-                  {errors.password && (
-                    <span className="text-red-500 font-semibold text-sm mt-2 border-2 border-red-400 rounded-full p-2">
-                      {errors.password?.message}
-                    </span>
-                  )}
-                </div>
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Confirm Password</span>
-                  </label>
-                  <div className="relative">
+
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Email</span>
+                    </label>
                     <input
-                      type={confirmPasswordState ? "password" : "text"}
-                      placeholder="Rewrite Password"
-                      className="input input-bordered w-full"
-                      {...register("confirmPassword")}
+                      type="email"
+                      placeholder="Email"
+                      className="input input-bordered"
+                      {...register("email")}
                     />
-                    <div
-                      className="absolute inset-y-4 right-4 cursor-pointer"
-                      onClick={() =>
-                        setConfirmPasswordState(!confirmPasswordState)
+                    {errors.email && (
+                      <span className="text-red-500 font-semibold text-sm mt-2 border-2 border-red-400 rounded-full p-2">
+                        {errors.email?.message}
+                      </span>
+                    )}
+                  </div>
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Password</span>
+                    </label>
+                    <div className="relative">
+                      <input
+                        type={passwordState ? "password" : "text"}
+                        placeholder="Password"
+                        className="input input-bordered w-full"
+                        {...register("password")}
+                      />
+                      <div
+                        className="absolute inset-y-4 right-4 cursor-pointer"
+                        onClick={() => setPasswordState(!passwordState)}
+                      >
+                        {passwordState ? (
+                          <FaEyeSlash></FaEyeSlash>
+                        ) : (
+                          <FaEye></FaEye>
+                        )}
+                      </div>
+                    </div>
+                    {errors.password && (
+                      <span className="text-red-500 font-semibold text-sm mt-2 border-2 border-red-400 rounded-full p-2">
+                        {errors.password?.message}
+                      </span>
+                    )}
+                  </div>
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Confirm Password</span>
+                    </label>
+                    <div className="relative">
+                      <input
+                        type={confirmPasswordState ? "password" : "text"}
+                        placeholder="Rewrite Password"
+                        className="input input-bordered w-full"
+                        {...register("confirmPassword")}
+                      />
+                      <div
+                        className="absolute inset-y-4 right-4 cursor-pointer"
+                        onClick={() =>
+                          setConfirmPasswordState(!confirmPasswordState)
+                        }
+                      >
+                        {confirmPasswordState ? (
+                          <FaEyeSlash></FaEyeSlash>
+                        ) : (
+                          <FaEye></FaEye>
+                        )}
+                      </div>
+                    </div>
+                    {errors.confirmPassword && (
+                      <span className="text-red-500 font-semibold text-sm mt-2 border-2 border-red-400 rounded-full p-2">
+                        {errors.confirmPassword?.message}
+                      </span>
+                    )}
+                  </div>
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Upload Profile Image</span>
+                    </label>
+                    <input
+                      type="file"
+                      className="file-input file-input-bordered w-full max-w-xs"
+                      accept="image/png, image/gif, image/jpeg"
+                      {...register("image")}
+                      onChange={(e) =>
+                        handleImageUploadOnChange(e.target.files[0])
                       }
-                    >
-                      {confirmPasswordState ? (
-                        <FaEyeSlash></FaEyeSlash>
-                      ) : (
-                        <FaEye></FaEye>
-                      )}
-                    </div>
+                    />
                   </div>
-                  {errors.confirmPassword && (
+                  {errors.image && (
                     <span className="text-red-500 font-semibold text-sm mt-2 border-2 border-red-400 rounded-full p-2">
-                      {errors.confirmPassword?.message}
+                      {errors.image?.message}
                     </span>
                   )}
-                </div>
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Upload Profile Image</span>
-                  </label>
-                  <input
-                    type="file"
-                    className="file-input file-input-bordered w-full max-w-xs"
-                    accept="image/png, image/gif, image/jpeg"
-                    {...register("image")}
-                    onChange={(e) =>
-                      handleImageUploadOnChange(e.target.files[0])
-                    }
-                  />
-                </div>
-                {errors.image && (
-                  <span className="text-red-500 font-semibold text-sm mt-2 border-2 border-red-400 rounded-full p-2">
-                    {errors.image?.message}
-                  </span>
-                )}
-                <div className="form-control mt-6">
-                  <input
-                    type="submit"
-                    className="btn btn-primary"
-                    value="Register"
-                  />
-                </div>
-              </form>
-              <div className="divider">Or Sign In With</div>
-              <SocialLogin navigate={navigate} from={from}></SocialLogin>
+                  <div className="form-control mt-6">
+                    <input
+                      type="submit"
+                      className="btn btn-primary"
+                      value="Register"
+                    />
+                  </div>
+                </form>
+                <div className="divider">Or Sign In With</div>
+                <SocialLogin navigate={navigate} from={from}></SocialLogin>
 
-              <div className="w-full block text-left text-xs mt-3">
-                Already Have An Account?{" "}
-                <Link className="btn-link" to="/login">
-                  Login Here!
-                </Link>
+                <div className="w-full block text-left text-xs mt-3">
+                  Already Have An Account?{" "}
+                  <Link className="btn-link" to="/login">
+                    Login Here!
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </>
