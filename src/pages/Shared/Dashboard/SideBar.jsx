@@ -39,13 +39,14 @@ const SideBar = ({ children }) => {
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
         <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content space-y-3">
           {/* Sidebar content here */}
-          <li>
-            <NavLink to="/dashboard/my-dashboard">
-              <FaUser></FaUser> Dashboard
-            </NavLink>
-          </li>
+
           {isAdmin && (
             <>
+              <li>
+                <NavLink to="/dashboard/admin-dashboard">
+                  <FaHome></FaHome> Dashboard
+                </NavLink>
+              </li>
               <li>
                 <NavLink to="/dashboard/users">
                   <FaUsers></FaUsers> All Users
@@ -61,6 +62,11 @@ const SideBar = ({ children }) => {
           {isInstructor && (
             <>
               <li>
+                <NavLink to="/dashboard/instructor-dashboard">
+                  <FaHome></FaHome> Dashboard
+                </NavLink>
+              </li>
+              <li>
                 <NavLink to="/dashboard/my-classes">
                   <FaDashcube></FaDashcube> My Classes
                 </NavLink>
@@ -74,6 +80,11 @@ const SideBar = ({ children }) => {
           )}
           {isStudent && (
             <>
+              <li>
+                <NavLink to="/dashboard/student-dashboard">
+                  <FaHome></FaHome> Dashboard
+                </NavLink>
+              </li>
               <li>
                 <NavLink to="/dashboard/enrolled">
                   <FaFlipboard></FaFlipboard> Enrolled Classes

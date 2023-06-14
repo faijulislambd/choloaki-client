@@ -7,7 +7,6 @@ import Login from "../pages/LoginRegister/Login/Login";
 import Register from "../pages/LoginRegister/Register/Register";
 import MyCart from "../pages/Dashboard/MyCart/MyCart";
 import Dashboard from "../layout/Dashboard";
-import UserDashboard from "../pages/Dashboard/UserDashboard/UserDashboard";
 import PrivateRoute from "./PrivateRoute";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 import TeacherClasses from "../pages/Dashboard/TeacherClasses/TeacherClasses";
@@ -19,6 +18,9 @@ import StudentRoute from "./StudentRoute";
 import Payment from "../pages/Dashboard/MyCart/Payment";
 import Transactions from "../pages/Dashboard/Transactions/Transactions";
 import Enrolled from "../pages/Dashboard/Enrolled/Enrolled";
+import AdminDashboard from "../pages/Dashboard/UserDashboard/AdminDashboard";
+import StudentDashboard from "../pages/Dashboard/UserDashboard/StudentDashboard";
+import InstructorDashboard from "../pages/Dashboard/UserDashboard/InstructorDashboard";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -55,8 +57,28 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "my-dashboard",
-        element: <UserDashboard></UserDashboard>,
+        path: "admin-dashboard",
+        element: (
+          <AdminRoute>
+            <AdminDashboard></AdminDashboard>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "student-dashboard",
+        element: (
+          <StudentRoute>
+            <StudentDashboard></StudentDashboard>
+          </StudentRoute>
+        ),
+      },
+      {
+        path: "instructor-dashboard",
+        element: (
+          <InstructorRoute>
+            <InstructorDashboard></InstructorDashboard>
+          </InstructorRoute>
+        ),
       },
       {
         path: "cart",

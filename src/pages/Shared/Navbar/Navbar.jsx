@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import useInsertCart from "../../../hooks/useInsertCart";
 import { useEffect } from "react";
 import useAuth from "../../../hooks/useAuth";
+import axios from "axios";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -15,10 +16,10 @@ const Navbar = () => {
   const [role, setRole] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:5000/users/role/${user?.email}`)
-      .then((res) => res.json())
-      .then((data) => setRole(data.role));
-  }, []);
+    axios(`http://localhost:5000/users/role/${user?.email}`).then((res) => {
+      setRole(res.data.role);
+    });
+  }, [role]);
 
   const light = "cupcake";
   const dark = "forest";
@@ -129,8 +130,15 @@ const Navbar = () => {
                       <li className="ps-3 text-primary">{user.displayName}</li>
                       <li>
                         <Link
-                          to="/dashboard/my-dashboard"
                           className="justify-between"
+                          to={
+                            (role === "admin" &&
+                              "/dashboard/admin-dashboard") ||
+                            (role === "instructor" &&
+                              "/dashboard/instructor-dashboard") ||
+                            (role === "student" &&
+                              "/dashboard/student-dashboard")
+                          }
                         >
                           Dashboard
                         </Link>
