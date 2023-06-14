@@ -21,6 +21,7 @@ import Enrolled from "../pages/Dashboard/Enrolled/Enrolled";
 import AdminDashboard from "../pages/Dashboard/UserDashboard/AdminDashboard";
 import StudentDashboard from "../pages/Dashboard/UserDashboard/StudentDashboard";
 import InstructorDashboard from "../pages/Dashboard/UserDashboard/InstructorDashboard";
+import NoPageFound from "../pages/NoPageFound/NoPageFound";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -145,5 +146,9 @@ export const router = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: "*",
+    element: <NoPageFound></NoPageFound>,
   },
 ]);

@@ -1,0 +1,31 @@
+.absolute-align-middle {
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -25%);
+  -webkit-transform: translate(-50%, -25%);
+  -moz-transform: translate(-50%, -25%);
+  -ms-transform: translate(-50%, -25%);
+  -o-transform: translate(-50%, -25%);
+}
+
+@media screen and (max-width: 991px) {
+  .absolute-align-middle {
+    top: 32%;
+    transform: translate(-50%, -32%);
+    -webkit-transform: translate(-50%, -32%);
+    -moz-transform: translate(-50%, -32%);
+    -ms-transform: translate(-50%, -32%);
+    -o-transform: translate(-50%, -32%);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .absolute-align-middle {
+    top: 37%;
+    transform: translate(-50%, -37%);
+    -webkit-transform: translate(-50%, -37%);
+    -moz-transform: translate(-50%, -37%);
+    -ms-transform: translate(-50%, -37%);
+    -o-transform: translate(-50%, -37%);
+  }
+}
