@@ -5,6 +5,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosIntercept from "../../../hooks/useAxiosIntercept";
 import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 
 const ClassesCard = ({ cls }) => {
   const { user } = useContext(UserContext);
@@ -13,8 +15,15 @@ const ClassesCard = ({ cls }) => {
   const location = useLocation();
   const [axiosIntercept] = useAxiosIntercept();
   const [seatsCount, setSeatsCount] = useState(cls.seats);
+  const [role, setRole] = useState("");
 
-  const hangleAddToCart = async (item) => {
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/users/role/${user?.email}`)
+      .then((data) => setRole(data.data.role));
+  }, []);
+
+  const handleAddToCart = async (item) => {
     const { name, image, price, _id } = item;
     if (user && user.email) {
       const cartItem = {
@@ -90,8 +99,12 @@ const ClassesCard = ({ cls }) => {
         <div className="card-actions items-center mt-4">
           <button
             className="btn btn-primary"
-            disabled={seatsCount <= 0 ? true : false}
-            onClick={() => hangleAddToCart(cls)}
+            disabled={
+              seatsCount <= 0 || role === "admin" || role === "instructor"
+                ? true
+                : false
+            }
+            onClick={() => handleAddToCart(cls)}
           >
             Add To Cart
           </button>
