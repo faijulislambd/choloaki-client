@@ -5,7 +5,7 @@ import useAxiosIntercept from "../../../hooks/useAxiosIntercept";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
 import "./Payment.css";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const CheckOutForm = ({ total, cart }) => {
   const stripe = useStripe();
@@ -17,15 +17,15 @@ const CheckOutForm = ({ total, cart }) => {
   const [processing, setProcessing] = useState(false);
   const [transactionID, setTransactionID] = useState("");
 
-  useEffect(() => {
-    axiosIntercept
-      .post("/create-payment-intent", { price: total })
-      .then((res) => {
-        setClientSecret(res.data.clientSecret);
-      });
-  }, [total]);
-
   const handleSubmit = async (e) => {
+    const navigate = useNavigate();
+    useEffect(() => {
+      axiosIntercept
+        .post("/create-payment-intent", { price: total })
+        .then((res) => {
+          setClientSecret(res.data.clientSecret);
+        });
+    }, []);
     e.preventDefault();
 
     if (!stripe || !elements) {
