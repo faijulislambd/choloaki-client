@@ -8,7 +8,7 @@ const useAxiosIntercept = () => {
   const navigate = useNavigate();
 
   const axiosIntercept = axios.create({
-    baseURL: "http://localhost:5000",
+    baseURL: "https://cholo-aki-server.vercel.app",
   });
 
   useEffect(() => {

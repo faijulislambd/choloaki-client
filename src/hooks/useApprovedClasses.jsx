@@ -8,7 +8,7 @@ const useApprovedClasses = () => {
     queryKey: ["approvedClasses", user?.email],
     queryFn: async () => {
       const response = await axios.get(
-        "http://localhost:5000/classes/approved"
+        "https://cholo-aki-server.vercel.app/classes/approved"
       );
       if (response.status !== 200) {
         throw new Error("Network response was not ok");

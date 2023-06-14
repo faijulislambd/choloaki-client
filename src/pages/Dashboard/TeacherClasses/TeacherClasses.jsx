@@ -20,6 +20,7 @@ const TeacherClasses = () => {
   const handleImageUploadOnChange = (file) => {
     imageUpload(file);
   };
+  console.log(loading);
   const handleFeedbackModal = (feedback) => {
     setFeedback(feedback);
     setFeedbackModal(true);
@@ -34,6 +35,7 @@ const TeacherClasses = () => {
   };
   const handleEditForm = (data) => {
     loading && imageUpload(data.image[0]);
+    console.log(loading);
     const name = data.name;
     const price = data.price;
     const seats = data.seats;

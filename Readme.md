@@ -10,11 +10,11 @@
 
 ## My Server Link:
 
-**<http://localhost:5000/>**
+**<https://cholo-aki-server.vercel.app/>**
 
-## My Website Server Git Repo Link:
+## My Website Server Git Private Repo Link:
 
-**<https://github.com/faijulislambd/akushontoy-server.git>**
+**<https://github.com/programming-hero-web-course1/b7a12-summer-camp-server_side-faijulislambd.git>**
 
 ## Admin: admin@email.com
 

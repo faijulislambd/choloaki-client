@@ -8,7 +8,9 @@ const useInstructors = () => {
   const { refetch, data: instructors = [] } = useQuery({
     queryKey: ["instructors", user?.email],
     queryFn: async () => {
-      const response = await axios.get(`http://localhost:5000/instructors`);
+      const response = await axios.get(
+        `https://cholo-aki-server.vercel.app/instructors`
+      );
       if (response.status !== 200) {
         throw new Error("Network response was not ok");
       }

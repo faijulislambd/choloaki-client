@@ -28,7 +28,7 @@ const MyCart = () => {
       if (!loading) {
         if (result.isConfirmed) {
           axiosIntercept
-            .delete(`http://localhost:5000/cart/${currentCartID}`)
+            .delete(`https://cholo-aki-server.vercel.app/cart/${currentCartID}`)
             .then(async (data) => {
               console.log(data.data.deletedCount);
               if (data.data.deletedCount > 0) {
@@ -83,7 +83,11 @@ const MyCart = () => {
           <div className="stat-title text-slate-400">Total Cost</div>
           <div className="stat-value text-slate-300">${totalCartCost}</div>
           <div className="stat-actions">
-            <Link to="/dashboard/payment" className="btn btn-sm btn-primary">
+            <Link
+              to="/dashboard/payment"
+              className="btn btn-sm btn-primary"
+              disabled={cart.length <= 0 ? true : false}
+            >
               Pay
             </Link>
           </div>

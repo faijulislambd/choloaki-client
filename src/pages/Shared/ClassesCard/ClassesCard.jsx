@@ -19,7 +19,7 @@ const ClassesCard = ({ cls }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/users/role/${user?.email}`)
+      .get(`https://cholo-aki-server.vercel.app/users/role/${user?.email}`)
       .then((data) => setRole(data.data.role));
   }, []);
 

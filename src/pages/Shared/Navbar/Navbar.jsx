@@ -16,10 +16,12 @@ const Navbar = () => {
   const [role, setRole] = useState("");
 
   useEffect(() => {
-    axios(`http://localhost:5000/users/role/${user?.email}`).then((res) => {
-      setRole(res.data.role);
-    });
-  }, [role]);
+    axios(`https://cholo-aki-server.vercel.app/users/role/${user?.email}`).then(
+      (res) => {
+        setRole(res.data.role);
+      }
+    );
+  }, []);
 
   const light = "cupcake";
   const dark = "forest";

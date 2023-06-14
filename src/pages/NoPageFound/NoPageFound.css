@@ -1,4 +1,7 @@
-.absolute-align-middle {
+.absolute-align-middle,
+.absolute-align-middle:active:hover,
+.absolute-align-middle:active,
+.absolute-align-middle:active:focus {
   top: 25%;
   left: 50%;
   transform: translate(-50%, -25%);

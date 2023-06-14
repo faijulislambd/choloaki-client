@@ -61,7 +61,7 @@ const AuthProviders = ({ children }) => {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Google Login Successful!",
+          title: "Login Successful!",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -115,7 +115,7 @@ const AuthProviders = ({ children }) => {
       // JWT Email Send
       if (currentUser) {
         axios
-          .post("http://localhost:5000/jwt", {
+          .post("https://cholo-aki-server.vercel.app/jwt", {
             email: currentUser.email,
           })
           .then((data) => {
