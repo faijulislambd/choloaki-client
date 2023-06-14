@@ -8,6 +8,8 @@ import { useEffect } from "react";
 import useAuth from "../../../hooks/useAuth";
 import axios from "axios";
 import { useRef } from "react";
+import Loader from "../../../components/Loader";
+import useRole from "../../../hooks/useRole";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -17,15 +19,8 @@ const Navbar = () => {
   const checkboxRef = useRef(null);
   const [selectedLogo, setSelectedLogo] = useState(logo);
   const [checked, setChecked] = useState(currentTheme);
-  const [role, setRole] = useState("");
 
-  useEffect(() => {
-    axios(`https://cholo-aki-server.vercel.app/users/role/${user?.email}`).then(
-      (res) => {
-        setRole(res.data.role);
-      }
-    );
-  }, []);
+  const [role] = useRole();
 
   useEffect(() => {
     if (localStorage.getItem("theme")) {
