@@ -1,6 +1,7 @@
 import {
   FaCartArrowDown,
   FaDashcube,
+  FaFlipboard,
   FaHistory,
   FaHome,
   FaPenSquare,
@@ -73,6 +74,11 @@ const SideBar = ({ children }) => {
           )}
           {isStudent && (
             <>
+              <li>
+                <NavLink to="/dashboard/enrolled">
+                  <FaFlipboard></FaFlipboard> Enrolled Classes
+                </NavLink>
+              </li>
               <li>
                 <NavLink to="/dashboard/cart">
                   <FaCartArrowDown></FaCartArrowDown> My Cart

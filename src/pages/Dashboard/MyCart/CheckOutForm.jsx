@@ -5,6 +5,7 @@ import useAxiosIntercept from "../../../hooks/useAxiosIntercept";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
 import "./Payment.css";
+import { Navigate } from "react-router-dom";
 
 const CheckOutForm = ({ total, cart }) => {
   const stripe = useStripe();
@@ -86,6 +87,7 @@ const CheckOutForm = ({ total, cart }) => {
             showConfirmButton: false,
             timer: 1500,
           });
+          <Navigate to="/dashboard/enrolled"></Navigate>;
         }
       });
     }
