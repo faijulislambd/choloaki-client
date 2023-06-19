@@ -4,9 +4,9 @@
 
 **<https://choloaki-db2c8.web.app/>**
 
-## My Website Client Git Private Repo Link:
+## My Website Client Git Repo Link:
 
-**<https://github.com/programming-hero-web-course1/b712-summer-camp-client-side-faijulislambd.git>**
+**<https://github.com/faijulislambd/choloaki-client.git>**
 
 ## My Server Link:
 
