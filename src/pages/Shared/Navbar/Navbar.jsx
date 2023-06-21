@@ -36,7 +36,10 @@ const Navbar = () => {
   }, []);
 
   const [cart] = useInsertCart();
-  const totalCartCost = cart.reduce((sum, item) => item.price + sum, 0);
+  const totalCartCost = cart.reduce(
+    (sum, item) => parseFloat(item.price) + sum,
+    0
+  );
 
   document.querySelector("html").setAttribute("data-theme", currentTheme);
 
