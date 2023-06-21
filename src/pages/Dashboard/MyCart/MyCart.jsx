@@ -68,10 +68,12 @@ const MyCart = () => {
 
   if (currentSeat !== null && currentClassID !== null && cartDeleted)
     cartRemove();
-  const totalCartCost = cart.reduce(
+  const reducedCartCost = cart.reduce(
     (sum, item) => parseFloat(item.price) + sum,
     0
   );
+
+  const totalCartCost = parseFloat(reducedCartCost.toFixed(2));
 
   return (
     <>

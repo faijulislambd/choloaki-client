@@ -26,6 +26,7 @@ const ClassesCard = ({ cls }) => {
 
   const handleAddToCart = async (item) => {
     const { name, image, price, _id } = item;
+
     if (user && user.email) {
       const cartItem = {
         course_id: _id,
@@ -73,9 +74,7 @@ const ClassesCard = ({ cls }) => {
   };
 
   return (
-    <motion.div
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.9 }}
+    <div
       className={`card w-96 shadow-xl ${
         seatsCount === 0 ? "bg-red-500" : "bg-base-200"
       }`}
@@ -115,7 +114,7 @@ const ClassesCard = ({ cls }) => {
           </motion.button>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
