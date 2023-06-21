@@ -8,6 +8,10 @@
 
 **<https://github.com/faijulislambd/choloaki-client.git>**
 
+## Site Email: admin@email.com
+
+## Admin Password: Admin@1234
+
 **The features of my website are as follows:**
 
 1. Easy to use interface
